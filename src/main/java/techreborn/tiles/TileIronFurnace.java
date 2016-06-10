@@ -3,28 +3,33 @@ package techreborn.tiles;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import reborncore.api.tile.IInventoryProvider;
 import reborncore.common.blocks.BlockMachineBase;
 import reborncore.common.tile.TileMachineBase;
+import reborncore.common.tile.TileMachineInventory;
 import reborncore.common.util.Inventory;
 
-public class TileIronFurnace extends TileMachineBase implements IInventoryProvider
+public class TileIronFurnace extends TileEntity implements ITickable, IInventory, IInventoryProvider
 {
 
 	public int tickTime;
-	public Inventory inventory = new Inventory(3, "TileIronFurnace", 64, this);
+	public Inventory inventory = new Inventory(3, "TileIronFurnace", 64);
 	public int fuel;
-	public int fuelGague;
+	public int fuelGauge;
 	public int progress;
-	public int fuelScale = 200;
+	public int fuelScale = 160;
 	int input1 = 0;
 	int output = 1;
 	int fuelslot = 2;
@@ -37,20 +42,23 @@ public class TileIronFurnace extends TileMachineBase implements IInventoryProvid
 
 	public int gaugeFuelScaled(int scale)
 	{
-		if (fuelGague == 0)
+		if (fuelGauge == 0)
 		{
-			fuelGague = fuel;
-			if (fuelGague == 0)
+			fuelGauge = fuel;
+			if (fuelGauge == 0)
 			{
-				fuelGague = fuelScale;
+				fuelGauge = fuelScale;
 			}
 		}
-		return (fuel * scale) / fuelGague;
+		return (fuel * scale) / fuelGauge;
 	}
 
 	@Override
-	public void updateEntity()
+	public void update()
 	{
+		if(getWorld().isRemote)
+			return;
+
 		boolean burning = isBurning();
 		boolean updateInventory = false;
 		if (fuel > 0)
@@ -60,7 +68,7 @@ public class TileIronFurnace extends TileMachineBase implements IInventoryProvid
 		}
 		if (fuel <= 0 && canSmelt())
 		{
-			fuel = fuelGague = (int) (TileEntityFurnace.getItemBurnTime(getStackInSlot(fuelslot)) * 1.25);
+			fuel = fuelGauge = (int) (TileEntityFurnace.getItemBurnTime(getStackInSlot(fuelslot))); // * 1.25);
 			if (fuel > 0)
 			{
 				if (getStackInSlot(fuelslot).getItem().hasContainerItem()) // Fuel

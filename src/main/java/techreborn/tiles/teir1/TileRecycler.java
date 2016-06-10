@@ -1,172 +1,70 @@
 package techreborn.tiles.teir1;
 
-import reborncore.common.IWrenchable;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.api.tile.IInventoryProvider;
-import reborncore.common.blocks.BlockMachineBase;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import reborncore.common.util.Inventory;
+import reborncore.common.container.RebornContainer;
+import reborncore.common.tile.TileMachineInventory;
+import techreborn.client.container.ContainerRecycler;
 import techreborn.init.ModBlocks;
 import techreborn.items.ItemParts;
 
-public class TileRecycler extends TilePowerAcceptor implements IWrenchable,IInventoryProvider, ISidedInventory
+public class TileRecycler extends TileMachineInventory
 {
+	private int chance = 8;
 
-	public Inventory inventory = new Inventory(6, "TileRecycler", 64, this);
-	public int capacity = 1000;
-	public int cost = 20;
-	public int progress;
-	public int time = 200;
-	public int chance = 4;
-	public int random;
-	public int input1 = 0;
-	public int output = 1;
+	public int inputSlot = 0;
+	public int outputSlot = 1;
 
-	public TileRecycler()
-	{
-		super(1);
+	public TileRecycler() {
+		super(EnumPowerTier.LOW, 1000, 1, 45, "TileRecycler", 6, 64);
 	}
 
-	public int gaugeProgressScaled(int scale)
+	public void machineFinish() // recycleItems
 	{
-		return (progress * scale) / time;
-	}
+		ItemStack itemstack = ItemParts.getPartByName("scrap");
+		int randomchance = worldObj.rand.nextInt(chance);
 
-	@Override
-	public void updateEntity()
-	{
-		if(worldObj.isRemote){
-			return;
-		}
-		boolean burning = isBurning();
-		boolean updateInventory = false;
-		if (getEnergy() <= cost && canRecycle())
-		{
-			if (getEnergy() > cost)
-			{
-				updateInventory = true;
+		if (getInventory().getStackInSlot(outputSlot) == null) {
+			if (randomchance == 1) {
+				getInventory().setInventorySlotContents(outputSlot, itemstack.copy());
 			}
 		}
-		if (isBurning() && canRecycle())
-		{
-			updateState();
-
-			progress++;
-			if (progress >= time)
-			{
-				progress = 0;
-				recycleItems();
-				updateInventory = true;
+		else if (getInventory().getStackInSlot(outputSlot).isItemEqual(itemstack)) {
+			if (randomchance == 1) {
+				getInventory().getStackInSlot(outputSlot).stackSize += itemstack.stackSize;
 			}
-		} else
-		{
-			progress = 0;
-			updateState();
 		}
-		if (burning != isBurning())
-		{
-			updateInventory = true;
+		if (getInventory().getStackInSlot(inputSlot).stackSize > 1) {
+			getInventory().decrStackSize(inputSlot, 1);
 		}
-		if (updateInventory)
-		{
-			markDirty();
-		}
-	}
-
-	public void recycleItems()
-	{
-		if (this.canRecycle())
-		{
-			ItemStack itemstack = ItemParts.getPartByName("scrap");
-			int randomchance = worldObj.rand.nextInt(chance);
-
-			if (getStackInSlot(output) == null)
-			{
-				useEnergy(cost);
-				if (randomchance == 1)
-				{
-					setInventorySlotContents(output, itemstack.copy());
-				}
-			} else if (getStackInSlot(output).isItemEqual(itemstack))
-			{
-				useEnergy(cost);
-				if (randomchance == 1)
-				{
-					getStackInSlot(output).stackSize += itemstack.stackSize;
-				}
-			}
-			if (getStackInSlot(input1).stackSize > 1)
-			{
-				useEnergy(cost);
-				this.decrStackSize(input1, 1);
-			} else
-			{
-				useEnergy(cost);
-				setInventorySlotContents(input1, null);
-			}
+		else {
+			getInventory().setInventorySlotContents(inputSlot, null);
 		}
 	}
 
 	public boolean canRecycle()
 	{
-		return getStackInSlot(input1) != null && hasSlotGotSpace(output);
+		return getInventory().getStackInSlot(inputSlot) != null && hasSlotGotSpace(outputSlot);
 	}
 
 	public boolean hasSlotGotSpace(int slot)
 	{
-		if (getStackInSlot(slot) == null)
-		{
+		if (getInventory().getStackInSlot(slot) == null) {
 			return true;
-		} else if (getStackInSlot(slot).stackSize < getStackInSlot(slot).getMaxStackSize())
-		{
+		}
+		else if (getInventory().getStackInSlot(slot).stackSize < getInventory().getStackInSlot(slot).getMaxStackSize()) {
 			return true;
 		}
 		return true;
 	}
 
-	public boolean isBurning()
-	{
-		return getEnergy() > cost;
-	}
-
-	public void updateState()
-	{
-		IBlockState BlockStateContainer = worldObj.getBlockState(pos);
-		if (BlockStateContainer.getBlock() instanceof BlockMachineBase)
-		{
-			BlockMachineBase blockMachineBase = (BlockMachineBase) BlockStateContainer.getBlock();
-			if (BlockStateContainer.getValue(BlockMachineBase.ACTIVE) != progress > 0)
-				blockMachineBase.setActive(progress > 0, worldObj, pos);
-		}
-	}
-
 	@Override
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, EnumFacing side)
-	{
-		return false;
-	}
-
-	@Override
-	public EnumFacing getFacing()
-	{
-		return getFacingEnum();
-	}
-
-	@Override
-	public boolean wrenchCanRemove(EntityPlayer entityPlayer)
-	{
-		return entityPlayer.isSneaking();
-	}
-
-	@Override
-	public float getWrenchDropRate()
-	{
-		return 1.0F;
+	public boolean canWork() {
+		return super.canWork() && canRecycle();
 	}
 
 	@Override
@@ -175,49 +73,23 @@ public class TileRecycler extends TilePowerAcceptor implements IWrenchable,IInve
 		return new ItemStack(ModBlocks.recycler, 1);
 	}
 
-	public boolean isComplete()
-	{
-		return false;
-	}
-
-	// ISidedInventory
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return side == EnumFacing.DOWN ? new int[] { output } : new int[] { input1 };
-	}
-
-	@Override
-	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		if (slotIndex == output)
-			return false;
-		return isItemValidForSlot(slotIndex, itemStack);
-	}
-
-	@Override
-	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		return slotIndex == output;
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return capacity;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return false;
-	}
+//	// ISidedInventory
+//	@Override
+//	public int[] getSlotsForFace(EnumFacing side)
+//	{
+//		return side == EnumFacing.DOWN ? new int[] { outputSlot } : new int[] { inputSlot };
+//	}
+//
+//	@Override
+//	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side) {
+//		return slotIndex != outputSlot && isItemValidForSlot(slotIndex, itemStack);
+//	}
+//
+//	@Override
+//	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		return slotIndex == outputSlot;
+//	}
 
 	@Override
 	public double getMaxOutput()
@@ -232,13 +104,12 @@ public class TileRecycler extends TilePowerAcceptor implements IWrenchable,IInve
 	}
 
 	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.MEDIUM;
+	public RebornContainer getContainer() {
+		return RebornContainer.getContainerFromClass(ContainerRecycler.class, this);
 	}
 
 	@Override
-	public Inventory getInventory() {
-		return inventory;
+	public void updateInventory() {
+
 	}
 }

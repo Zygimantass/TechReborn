@@ -19,7 +19,7 @@ public class TRPowerNet
 	int tick = 0;
 	EnumCableType cableType;
 	private ArrayList<CableMultipart> cables = new ArrayList();
-	private int energy = 0;
+	private double energy = 0;
 
 	public TRPowerNet(EnumCableType cableType)
 	{
@@ -184,18 +184,14 @@ public class TRPowerNet
 		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 
-	public int getEnergy()
+	public double getEnergy()
 	{
-		return energy;
+		return this.energy;
 	}
 
-	public void setEnergy(int energy)
+	public void setEnergy(double energy)
 	{
-		this.energy += energy;
-		if (this.energy < 0)
-		{
-			this.energy = 0;
-		}
+		this.energy = Math.max(0, this.energy + energy);
 	}
 
 	public void addConnection(IEnergyInterfaceTile ih, EnumFacing dir)
@@ -302,20 +298,20 @@ public class TRPowerNet
 			return tile == this.tile;
 		}
 
-		public int collectEnergy(int max)
+		public double collectEnergy(int max)
 		{
-			int total = 0;
+			double total = 0;
 			if (tile.canProvideEnergy(side.getOpposite()))
 			{
-				int collect = (int) Math.min(max, Math.min(tile.getMaxOutput(), tile.getEnergy()));
-				total = (int) tile.useEnergy(collect, false);
+				double collect = Math.min(max, Math.min(tile.getMaxOutput(), tile.getEnergy()));
+				total = tile.useEnergy(collect, false);
 			}
 			return total;
 		}
 
-		public int addEnergy(int max)
+		public double addEnergy(double max)
 		{
-			int total = 0;
+			double total = 0;
 			if (tile.canAcceptEnergy(side.getOpposite()) && max > 0)
 			{
 				if (type.tier.ordinal() > tile.getTier().ordinal() && max > tile.getMaxInput())
@@ -329,27 +325,26 @@ public class TRPowerNet
 					}
 					return 0;
 				}
-				int add = max - total;
-				total += tile.addEnergy(add, false);
+				total = tile.addEnergy(max, false);
 			}
 			return total;
 		}
 
-		public int getTotalCollectible()
+		public double getTotalCollectible()
 		{
 			if (tile.canProvideEnergy(side.getOpposite()) && tile.getEnergy() > 0)
 			{
-				return (int) Math.min(tile.getMaxOutput(), tile.getEnergy());
+				return Math.min(tile.getMaxOutput(), tile.getEnergy());
 			}
 			return 0;
 		}
 
-		public int getTotalInsertible()
+		public double getTotalInsertible()
 		{
-			int total = 0;
+			double total = 0;
 			if (tile.canAcceptEnergy(side.getOpposite()) && tile.getMaxPower() - tile.getEnergy() > 0)
 			{
-				total += tile.addEnergy(type.transferRate, true);
+				total = tile.addEnergy(type.transferRate, true);
 			}
 
 			return total;
