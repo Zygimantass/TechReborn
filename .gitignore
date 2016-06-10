@@ -11,6 +11,7 @@
 /.settings
 ./classpath
 /dep
+/classes
 
 TechReborn.iws
 TechReborn.ipr
