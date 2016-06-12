@@ -8,7 +8,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileDigitalChest;
+import techreborn.tiles.energy.tier3.TileDigitalChest;
 
 public class BlockDigitalChest extends BlockMachineBase implements IAdvancedRotationTexture
 {

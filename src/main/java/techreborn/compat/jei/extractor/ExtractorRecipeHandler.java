@@ -27,14 +27,14 @@ public class ExtractorRecipeHandler implements IRecipeHandler<ExtractorRecipe>
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull ExtractorRecipe recipe) {
 		return RecipeCategoryUids.EXTRACTOR;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull ExtractorRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.EXTRACTOR;
 	}
 

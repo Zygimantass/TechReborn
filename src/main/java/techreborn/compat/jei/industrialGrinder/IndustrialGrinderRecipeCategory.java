@@ -14,7 +14,7 @@ import net.minecraft.util.text.translation.I18n;
 import techreborn.client.gui.GuiIndustrialGrinder;
 import techreborn.compat.jei.RecipeCategoryUids;
 import techreborn.compat.jei.RecipeUtil;
-import techreborn.tiles.TileIndustrialGrinder;
+import techreborn.tiles.energy.tier2.TileIndustrialGrinder;
 
 public class IndustrialGrinderRecipeCategory extends BlankRecipeCategory
 {

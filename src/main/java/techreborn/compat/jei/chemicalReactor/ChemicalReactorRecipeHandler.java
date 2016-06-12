@@ -27,14 +27,14 @@ public class ChemicalReactorRecipeHandler implements IRecipeHandler<ChemicalReac
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull ChemicalReactorRecipe recipe) {
 		return RecipeCategoryUids.CHEMICAL_REACTOR;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull ChemicalReactorRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.CHEMICAL_REACTOR;
 	}
 

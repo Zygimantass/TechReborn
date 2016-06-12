@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.client.gui.GuiUtil;
-import techreborn.client.container.ContainerIndustrialSawmill;
-import techreborn.tiles.TileIndustrialSawmill;
+import techreborn.client.container.energy.tier2.ContainerIndustrialSawmill;
+import techreborn.tiles.energy.tier2.TileIndustrialSawmill;
 
 public class GuiIndustrialSawmill extends GuiContainer
 {

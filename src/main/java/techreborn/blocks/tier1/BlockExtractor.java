@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.teir1.TileExtractor;
+import techreborn.tiles.energy.tier1.TileExtractor;
 
 public class BlockExtractor extends BlockMachineBase implements IRotationTexture
 {

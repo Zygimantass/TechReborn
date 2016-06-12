@@ -10,7 +10,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.generator.TileSemifluidGenerator;
+import techreborn.tiles.energy.generator.TileSemifluidGenerator;
 
 public class BlockSemiFluidGenerator extends BlockMachineBase implements IAdvancedRotationTexture
 {

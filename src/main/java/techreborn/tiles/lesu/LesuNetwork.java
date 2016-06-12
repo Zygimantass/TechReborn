@@ -2,14 +2,14 @@ package techreborn.tiles.lesu;
 
 import java.util.ArrayList;
 
-public class LesuNetwork
+public class LESUNetwork
 {
 
-	public ArrayList<TileLesuStorage> storages = new ArrayList<>();
+	public ArrayList<TileLESUStorage> storages = new ArrayList<>();
 
-	public TileLesu master;
+	public TileLESU master;
 
-	public void addElement(TileLesuStorage lesuStorage)
+	public void addElement(TileLESUStorage lesuStorage)
 	{
 		if (!storages.contains(lesuStorage) && storages.size() < 5000)
 		{
@@ -17,7 +17,7 @@ public class LesuNetwork
 		}
 	}
 
-	public void removeElement(TileLesuStorage lesuStorage)
+	public void removeElement(TileLESUStorage lesuStorage)
 	{
 		storages.remove(lesuStorage);
 		rebuild();
@@ -26,21 +26,21 @@ public class LesuNetwork
 	private void rebuild()
 	{
 		master = null;
-		for (TileLesuStorage lesuStorage : storages)
+		for (TileLESUStorage lesuStorage : storages)
 		{
 			lesuStorage.findAndJoinNetwork(lesuStorage.getWorld(), lesuStorage.getPos().getX(),
 					lesuStorage.getPos().getY(), lesuStorage.getPos().getZ());
 		}
 	}
 
-	public void merge(LesuNetwork network)
+	public void merge(LESUNetwork network)
 	{
 		if (network != this)
 		{
-			ArrayList<TileLesuStorage> tileLesuStorages = new ArrayList<>();
+			ArrayList<TileLESUStorage> tileLesuStorages = new ArrayList<>();
 			tileLesuStorages.addAll(network.storages);
 			network.clear(false);
-			for (TileLesuStorage lesuStorage : tileLesuStorages)
+			for (TileLESUStorage lesuStorage : tileLesuStorages)
 			{
 				lesuStorage.setNetwork(this);
 			}
@@ -55,7 +55,7 @@ public class LesuNetwork
 	{
 		if (clearTiles)
 		{
-			for (TileLesuStorage tileLesuStorage : storages)
+			for (TileLESUStorage tileLesuStorage : storages)
 			{
 				tileLesuStorage.resetNetwork();
 			}

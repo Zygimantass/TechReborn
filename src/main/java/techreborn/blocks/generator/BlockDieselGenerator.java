@@ -10,7 +10,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.generator.TileDieselGenerator;
+import techreborn.tiles.energy.generator.TileDieselGenerator;
 
 public class BlockDieselGenerator extends BlockMachineBase implements IAdvancedRotationTexture
 {

@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerImplosionCompressor;
-import techreborn.tiles.TileImplosionCompressor;
+import techreborn.client.container.energy.tier2.ContainerImplosionCompressor;
+import techreborn.tiles.energy.tier2.TileImplosionCompressor;
 
 public class GuiImplosionCompressor extends GuiContainer
 {

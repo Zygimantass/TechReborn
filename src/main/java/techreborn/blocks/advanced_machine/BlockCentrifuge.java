@@ -8,7 +8,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileCentrifuge;
+import techreborn.tiles.energy.tier2.TileCentrifuge;
 
 public class BlockCentrifuge extends BlockMachineBase implements IRotationTexture
 {

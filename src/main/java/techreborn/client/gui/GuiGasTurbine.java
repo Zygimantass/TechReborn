@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerGasTurbine;
-import techreborn.tiles.generator.TileGasTurbine;
+import techreborn.client.container.energy.generator.ContainerGasTurbine;
+import techreborn.tiles.energy.generator.TileGasTurbine;
 
 public class GuiGasTurbine extends GuiContainer
 {

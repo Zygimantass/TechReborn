@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileAlloySmelter;
+import techreborn.tiles.energy.tier1.TileAlloySmelter;
 
 public class BlockAlloySmelter extends BlockMachineBase implements IRotationTexture
 {

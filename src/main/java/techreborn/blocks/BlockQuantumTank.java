@@ -9,7 +9,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileQuantumTank;
+import techreborn.tiles.energy.tier3.TileQuantumTank;
 
 public class BlockQuantumTank extends BlockMachineBase implements IAdvancedRotationTexture
 {

@@ -27,14 +27,14 @@ public class AlloySmelterRecipeHandler implements IRecipeHandler<AlloySmelterRec
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull AlloySmelterRecipe recipe) {
 		return RecipeCategoryUids.ALLOY_SMELTER;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull AlloySmelterRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.ALLOY_SMELTER;
 	}
 

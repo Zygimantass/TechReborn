@@ -2,7 +2,6 @@ package techreborn.blocks;
 
 import com.google.common.collect.Lists;
 import me.modmuss50.jsonDestroyer.api.ITexturedBlock;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -28,7 +27,7 @@ import reborncore.common.util.ChatUtils;
 import reborncore.common.util.StringUtils;
 import techreborn.client.TechRebornCreativeTab;
 import techreborn.lib.MessageIDs;
-import techreborn.tiles.TilePlayerDectector;
+import techreborn.tiles.energy.tier1.TilePlayerDectector;
 
 import java.util.List;
 import java.util.Random;

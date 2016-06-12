@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.container.RebornContainer;
-import techreborn.client.container.ContainerGrinder;
-import techreborn.tiles.teir1.TileGrinder;
+import techreborn.client.container.energy.tier1.ContainerGrinder;
+import techreborn.tiles.energy.tier1.TileGrinder;
 
 public class GuiGrinder extends GuiContainer
 {

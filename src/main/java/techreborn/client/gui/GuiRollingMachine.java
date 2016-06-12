@@ -6,8 +6,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerRollingMachine;
-import techreborn.tiles.TileRollingMachine;
+import techreborn.client.container.energy.tier1.ContainerRollingMachine;
+import techreborn.tiles.energy.tier1.TileRollingMachine;
 
 public class GuiRollingMachine extends GuiContainer
 {

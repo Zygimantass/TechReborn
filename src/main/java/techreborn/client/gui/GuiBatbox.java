@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerBatbox;
-import techreborn.tiles.storage.TileBatBox;
+import techreborn.client.container.energy.storage.ContainerBatbox;
+import techreborn.tiles.energy.storage.TileBatBox;
 
 public class GuiBatbox extends GuiContainer
 {

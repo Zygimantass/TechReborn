@@ -27,14 +27,14 @@ public class CentrifugeRecipeHandler implements IRecipeHandler<CentrifugeRecipe>
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull CentrifugeRecipe recipe) {
 		return RecipeCategoryUids.CENTRIFUGE;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull CentrifugeRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.CENTRIFUGE;
 	}
 

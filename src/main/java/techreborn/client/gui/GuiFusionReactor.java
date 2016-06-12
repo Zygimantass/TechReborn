@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerFusionReactor;
+import techreborn.client.container.energy.tier3.ContainerFusionReactor;
 import techreborn.tiles.fusionReactor.TileEntityFusionController;
 
 public class GuiFusionReactor extends GuiContainer

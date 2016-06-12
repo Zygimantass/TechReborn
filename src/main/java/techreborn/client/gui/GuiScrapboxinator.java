@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import techreborn.client.container.ContainerScrapboxinator;
-import techreborn.tiles.TileScrapboxinator;
+import techreborn.client.container.energy.tier1.ContainerScrapboxinator;
+import techreborn.tiles.energy.tier1.TileScrapboxinator;
 
 public class GuiScrapboxinator extends GuiContainer
 {

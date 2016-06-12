@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerRecycler;
-import techreborn.tiles.teir1.TileRecycler;
+import techreborn.client.container.energy.tier1.ContainerRecycler;
+import techreborn.tiles.energy.tier1.TileRecycler;
 
 public class GuiRecycler extends GuiContainer
 {

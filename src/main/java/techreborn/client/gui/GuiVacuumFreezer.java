@@ -13,9 +13,9 @@ import reborncore.client.multiblock.MultiblockSet;
 import reborncore.common.misc.Location;
 import reborncore.common.multiblock.CoordTriplet;
 import techreborn.client.ClientMultiBlocks;
-import techreborn.client.container.ContainerVacuumFreezer;
+import techreborn.client.container.energy.tier2.ContainerVacuumFreezer;
 import techreborn.proxies.ClientProxy;
-import techreborn.tiles.TileVacuumFreezer;
+import techreborn.tiles.energy.tier2.TileVacuumFreezer;
 
 public class GuiVacuumFreezer extends GuiContainer
 {

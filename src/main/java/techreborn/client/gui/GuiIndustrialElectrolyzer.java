@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerIndustrialElectrolyzer;
-import techreborn.tiles.TileIndustrialElectrolyzer;
+import techreborn.client.container.energy.tier1.ContainerIndustrialElectrolyzer;
+import techreborn.tiles.energy.tier1.TileIndustrialElectrolyzer;
 
 public class GuiIndustrialElectrolyzer extends GuiContainer
 {

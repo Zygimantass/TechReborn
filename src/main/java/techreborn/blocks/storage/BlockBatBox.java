@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import techreborn.client.GuiHandler;
-import techreborn.tiles.storage.TileBatBox;
+import techreborn.tiles.energy.storage.TileBatBox;
 
 import java.util.ArrayList;
 import java.util.List;

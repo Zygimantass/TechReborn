@@ -9,7 +9,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileMatterFabricator;
+import techreborn.tiles.energy.tier3.TileMatterFabricator;
 
 public class BlockMatterFabricator extends BlockMachineBase implements IAdvancedRotationTexture
 {

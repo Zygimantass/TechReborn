@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerExtractor;
-import techreborn.tiles.teir1.TileExtractor;
+import techreborn.client.container.energy.tier1.ContainerExtractor;
+import techreborn.tiles.energy.tier1.TileExtractor;
 
 public class GuiExtractor extends GuiContainer
 {

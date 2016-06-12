@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerLESU;
+import techreborn.client.container.energy.storage.ContainerLESU;
 import techreborn.tiles.lesu.TileLesu;
 
 public class GuiLESU extends GuiContainer

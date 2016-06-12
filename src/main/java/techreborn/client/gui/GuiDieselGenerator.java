@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerDieselGenerator;
-import techreborn.tiles.generator.TileDieselGenerator;
+import techreborn.client.container.energy.generator.ContainerDieselGenerator;
+import techreborn.tiles.energy.generator.TileDieselGenerator;
 
 public class GuiDieselGenerator extends GuiContainer
 {

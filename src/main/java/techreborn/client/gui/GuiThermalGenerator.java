@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerThermalGenerator;
-import techreborn.tiles.generator.TileThermalGenerator;
+import techreborn.client.container.energy.generator.ContainerThermalGenerator;
+import techreborn.tiles.energy.generator.TileThermalGenerator;
 
 public class GuiThermalGenerator extends GuiContainer
 {

@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerMFSU;
-import techreborn.tiles.storage.TileMFSU;
+import techreborn.client.container.energy.storage.ContainerMFSU;
+import techreborn.tiles.energy.storage.TileMFSU;
 
 /**
  * Created by Rushmead

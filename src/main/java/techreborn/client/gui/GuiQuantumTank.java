@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerQuantumTank;
-import techreborn.tiles.TileQuantumTank;
+import techreborn.client.container.energy.tier3.ContainerQuantumTank;
+import techreborn.tiles.energy.tier3.TileQuantumTank;
 
 public class GuiQuantumTank extends GuiContainer
 {

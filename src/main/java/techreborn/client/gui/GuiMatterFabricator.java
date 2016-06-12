@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerMatterFabricator;
-import techreborn.tiles.TileMatterFabricator;
+import techreborn.client.container.energy.tier3.ContainerMatterFabricator;
+import techreborn.tiles.energy.tier3.TileMatterFabricator;
 
 public class GuiMatterFabricator extends GuiContainer
 {

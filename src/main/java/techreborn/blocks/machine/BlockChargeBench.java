@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileChargeBench;
+import techreborn.tiles.energy.storage.TileChargeBench;
 
 public class BlockChargeBench extends BlockMachineBase implements IRotationTexture
 {

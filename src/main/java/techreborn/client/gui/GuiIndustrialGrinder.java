@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerIndustrialGrinder;
-import techreborn.tiles.TileIndustrialGrinder;
+import techreborn.client.container.energy.tier2.ContainerIndustrialGrinder;
+import techreborn.tiles.energy.tier2.TileIndustrialGrinder;
 
 public class GuiIndustrialGrinder extends GuiContainer
 {

@@ -12,10 +12,10 @@ import reborncore.client.multiblock.Multiblock;
 import reborncore.client.multiblock.MultiblockSet;
 import reborncore.common.misc.Location;
 import reborncore.common.multiblock.CoordTriplet;
-import techreborn.client.container.ContainerBlastFurnace;
+import techreborn.client.container.energy.tier2.ContainerBlastFurnace;
 import techreborn.init.ModBlocks;
 import techreborn.proxies.ClientProxy;
-import techreborn.tiles.TileBlastFurnace;
+import techreborn.tiles.energy.tier2.TileBlastFurnace;
 
 import java.io.IOException;
 

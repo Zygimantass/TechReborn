@@ -20,7 +20,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileIronFurnace;
+import techreborn.tiles.energy.tier0.TileIronFurnace;
 
 public class BlockIronFurnace extends BlockMachineBase implements IRotationTexture
 {

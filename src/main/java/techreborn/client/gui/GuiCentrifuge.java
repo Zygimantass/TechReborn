@@ -6,9 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.container.RebornContainer;
-import techreborn.client.container.ContainerCentrifuge;
-import techreborn.client.container.ContainerGrinder;
-import techreborn.tiles.TileCentrifuge;
+import techreborn.client.container.energy.tier2.ContainerCentrifuge;
+import techreborn.tiles.energy.tier2.TileCentrifuge;
 
 public class GuiCentrifuge extends GuiContainer
 {

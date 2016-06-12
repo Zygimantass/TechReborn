@@ -14,7 +14,6 @@ public abstract class ContainerCrafting extends ContainerUpgradeable {
 
 	private int currentTickTime = 0;
 	private int currentNeededTicks = 0;
-	private int energy;
 
 	public ContainerCrafting(TileEnergyBase tileEntity, EntityPlayer player) {
 		super(tileEntity, player);
@@ -39,9 +38,6 @@ public abstract class ContainerCrafting extends ContainerUpgradeable {
 			if (this.currentNeededTicks != this.crafter.currentNeededTicks) {
 				IContainerListener.sendProgressBarUpdate(this, 1, this.crafter.currentNeededTicks);
 			}
-			if (this.energy != (int) this.crafter.parentTile.getEnergy()) {
-				IContainerListener.sendProgressBarUpdate(this, 2, (int) this.crafter.parentTile.getEnergy());
-			}
 		}
 	}
 
@@ -50,7 +46,6 @@ public abstract class ContainerCrafting extends ContainerUpgradeable {
 		super.addListener(crafting);
 		crafting.sendProgressBarUpdate(this, 0, this.crafter.currentTickTime);
 		crafting.sendProgressBarUpdate(this, 1, this.crafter.currentNeededTicks);
-		crafting.sendProgressBarUpdate(this, 2, (int) this.crafter.parentTile.getEnergy());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -65,11 +60,7 @@ public abstract class ContainerCrafting extends ContainerUpgradeable {
 		else if (id == 1) {
 			this.currentNeededTicks = value;
 		}
-		else if (id == 2) {
-			this.energy = value;
-		}
 		this.crafter.currentTickTime = this.currentTickTime;
 		this.crafter.currentNeededTicks = this.currentNeededTicks;
-		this.crafter.parentTile.setEnergy(this.energy);
 	}
 }

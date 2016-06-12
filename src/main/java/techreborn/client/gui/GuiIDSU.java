@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.packets.PacketHandler;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.ContainerIDSU;
+import techreborn.client.container.energy.storage.ContainerIDSU;
 import techreborn.packets.PacketIdsu;
 import techreborn.tiles.idsu.TileIDSU;
 

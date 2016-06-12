@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import reborncore.common.BaseTileBlock;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TilePump;
+import techreborn.tiles.energy.tier1.TilePump;
 
 /**
  * Created by modmuss50 on 08/05/2016.

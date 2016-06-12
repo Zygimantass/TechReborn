@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import reborncore.RebornCore;
 import reborncore.common.BaseTileBlock;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.generator.TileWaterMill;
+import techreborn.tiles.energy.generator.TileWaterMill;
 
 /**
  * Created by modmuss50 on 25/02/2016.

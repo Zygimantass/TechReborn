@@ -1,6 +1,7 @@
 package techreborn.api.gui;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import reborncore.client.gui.slots.BaseSlot;
 import techreborn.utils.upgrade.IMachineUpgrade;

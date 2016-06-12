@@ -17,14 +17,14 @@ public class RollingMachineRecipeHandler implements IRecipeHandler<RollingMachin
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull RollingMachineRecipeWrapper recipe) {
 		return RecipeCategoryUids.ROLLING_MACHINE;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull RollingMachineRecipeWrapper recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.ROLLING_MACHINE;
 	}
 

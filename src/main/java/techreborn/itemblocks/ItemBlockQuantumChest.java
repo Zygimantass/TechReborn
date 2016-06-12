@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import techreborn.tiles.TileQuantumChest;
+import techreborn.tiles.energy.tier3.TileQuantumChest;
 
 public class ItemBlockQuantumChest extends ItemBlock
 {

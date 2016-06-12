@@ -4,35 +4,28 @@ import reborncore.common.IWrenchable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import org.apache.commons.lang3.StringUtils;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.powerSystem.TilePowerAcceptor;
 import techreborn.config.ConfigTechReborn;
 import techreborn.init.ModBlocks;
+import techreborn.tiles.energy.storage.TileEnergyStorage;
 
-public class TileIDSU extends TilePowerAcceptor implements IWrenchable
+public class TileIDSU extends TileEnergyStorage implements IWrenchable
 {
 
 	public String ownerUdid;
-	public int tier;
-	public int output;
-	public double maxStorage;
 	private double euLastTick = 0;
 	private double euChange;
 	private int ticks;
 
-	public TileIDSU(int tier1, int output1, int maxStorage1)
+	public TileIDSU(EnumPowerTier tier, int output, int maxStorage)
 	{
-		super(tier1);
-		this.tier = tier1;
-		this.output = output1;
-		this.maxStorage = maxStorage1;
+		super("IDSU", null, tier, maxStorage, output, 1000000000);
 	}
 
 	public TileIDSU()
 	{
-		this(5, 2048, 100000000);
+		this(EnumPowerTier.EXTREME, 2048, 100000000);
 	}
 
 	@Override
@@ -55,51 +48,9 @@ public class TileIDSU extends TilePowerAcceptor implements IWrenchable
 		IDSUManager.INSTANCE.getSaveDataForWorld(worldObj, ownerUdid).storedPower = energy;
 	}
 
-	@Override
-	public void readFromNBTWithoutCoords(NBTTagCompound tag)
-	{
-
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return 1000000000;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return getFacingEnum() != direction;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return getFacingEnum() == direction;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return output;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return maxStorage;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.EXTREME;
-	}
-
 	public float getChargeLevel()
 	{
-		float ret = (float) this.getEnergy() / (float) this.maxStorage;
+		float ret = (float) this.getEnergy() / (float) this.getMaxPower();
 		if (ret > 1.0F)
 		{
 			ret = 1.0F;
@@ -129,45 +80,19 @@ public class TileIDSU extends TilePowerAcceptor implements IWrenchable
 	{
 		super.updateEntity();
 
-		if (ticks == ConfigTechReborn.AverageEuOutTickTime)
-		{
+		if (ticks == ConfigTechReborn.AverageEuOutTickTime) {
 			euChange = -1;
 			ticks = 0;
-
-		} else
-		{
+		}
+		else {
 			ticks++;
 			euChange += getEnergy() - euLastTick;
-			if (euLastTick == getEnergy())
-			{
+			if (euLastTick == getEnergy()) {
 				euChange = 0;
 			}
 		}
 
 		euLastTick = getEnergy();
-
-		boolean needsInvUpdate = false;
-
-		if (needsInvUpdate)
-		{
-			this.markDirty();
-		}
-
-	}
-
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, int side)
-	{
-		return false;
-	}
-
-	@Override public boolean wrenchCanSetFacing(EntityPlayer p0, EnumFacing p1)
-	{
-		return true;
-	}
-
-	@Override public EnumFacing getFacing()
-	{
-		return getFacingEnum();
 	}
 
 	@Override public boolean wrenchCanRemove(EntityPlayer p0)
@@ -180,13 +105,14 @@ public class TileIDSU extends TilePowerAcceptor implements IWrenchable
 		return 1.0F;
 	}
 
+	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer)
 	{
-		NBTTagCompound tileEntity = new NBTTagCompound();
+		NBTTagCompound tileTag = new NBTTagCompound();
 		ItemStack dropStack = new ItemStack(ModBlocks.Idsu, 1);
-		writeToNBT(tileEntity);
+		writeToNBT(tileTag);
 		dropStack.setTagCompound(new NBTTagCompound());
-		dropStack.getTagCompound().setTag("tileEntity", tileEntity);
+		dropStack.getTagCompound().setTag("tileEntity", tileTag);
 		return dropStack;
 	}
 
@@ -201,29 +127,19 @@ public class TileIDSU extends TilePowerAcceptor implements IWrenchable
 
 	public void handleGuiInputFromClient(int id)
 	{
-		if (id == 0)
-		{
-			output += 256;
+		if (id == 0) {
+			setMaxOutput(getMaxOutput() + 256);
 		}
-		if (id == 1)
-		{
-			output += 64;
+		if (id == 1) {
+            setMaxOutput(getMaxOutput() + 64);
 		}
-		if (id == 2)
-		{
-			output -= 64;
+		if (id == 2) {
+            setMaxOutput(getMaxOutput() - 64);
 		}
-		if (id == 3)
-		{
-			output -= 256;
+		if (id == 3) {
+            setMaxOutput(getMaxOutput() - 256);
 		}
-		if (output > 4096)
-		{
-			output = 4096;
-		}
-		if (output <= -1)
-		{
-			output = 0;
-		}
+
+        setMaxOutput(Math.max(0, Math.min(getMaxOutput(), 4096)));
 	}
 }

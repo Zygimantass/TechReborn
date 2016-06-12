@@ -27,14 +27,14 @@ public class BlastFurnaceRecipeHandler implements IRecipeHandler<BlastFurnaceRec
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull BlastFurnaceRecipe recipe) {
 		return RecipeCategoryUids.BLAST_FURNACE;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull BlastFurnaceRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.BLAST_FURNACE;
 	}
 

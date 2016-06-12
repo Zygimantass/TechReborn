@@ -14,7 +14,7 @@ import net.minecraft.util.text.translation.I18n;
 import techreborn.client.gui.GuiIndustrialSawmill;
 import techreborn.compat.jei.RecipeCategoryUids;
 import techreborn.compat.jei.RecipeUtil;
-import techreborn.tiles.TileIndustrialSawmill;
+import techreborn.tiles.energy.tier2.TileIndustrialSawmill;
 
 public class IndustrialSawmillRecipeCategory extends BlankRecipeCategory
 {

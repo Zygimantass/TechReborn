@@ -19,14 +19,14 @@ public class FusionReactorRecipeHandler implements IRecipeHandler<FusionReactorR
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid(@Nonnull FusionReactorRecipe recipe) {
 		return RecipeCategoryUids.FUSION_REACTOR;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull FusionReactorRecipe recipe) {
+	public String getRecipeCategoryUid()
+	{
 		return RecipeCategoryUids.FUSION_REACTOR;
 	}
 

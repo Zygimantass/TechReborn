@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileIndustrialElectrolyzer;
+import techreborn.tiles.energy.tier1.TileIndustrialElectrolyzer;
 
 public class BlockIndustrialElectrolyzer extends BlockMachineBase implements IRotationTexture
 {

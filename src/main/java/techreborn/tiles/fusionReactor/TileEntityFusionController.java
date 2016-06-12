@@ -7,14 +7,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.tile.IInventoryProvider;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import reborncore.common.util.Inventory;
+import reborncore.common.tile.TileMachineInventory;
 import reborncore.common.util.ItemUtils;
 import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
 import techreborn.init.ModBlocks;
 
-public class TileEntityFusionController extends TilePowerAcceptor implements IInventoryProvider
+public class TileEntityFusionController extends TileMachineInventory
 {
 
 	public Inventory inventory = new Inventory(3, "TileEntityFusionController", 64, this);
@@ -32,7 +31,7 @@ public class TileEntityFusionController extends TilePowerAcceptor implements IIn
 
 	public TileEntityFusionController()
 	{
-		super(4);
+		super(EnumPowerTier.EXTREME, 100000000, );
 	}
 
 	@Override

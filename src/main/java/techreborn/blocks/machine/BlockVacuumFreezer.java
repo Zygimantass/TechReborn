@@ -10,7 +10,7 @@ import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileVacuumFreezer;
+import techreborn.tiles.energy.tier2.TileVacuumFreezer;
 
 public class BlockVacuumFreezer extends BlockMachineBase implements IAdvancedRotationTexture
 {

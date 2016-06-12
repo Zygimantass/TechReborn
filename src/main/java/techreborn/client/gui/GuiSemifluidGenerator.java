@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerSemifluidGenerator;
-import techreborn.tiles.generator.TileSemifluidGenerator;
+import techreborn.client.container.energy.generator.ContainerSemifluidGenerator;
+import techreborn.tiles.energy.generator.TileSemifluidGenerator;
 
 public class GuiSemifluidGenerator extends GuiContainer
 {

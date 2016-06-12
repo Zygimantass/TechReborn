@@ -23,12 +23,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.common.tile.TileMachineBase;
 import techreborn.blocks.fluid.BlockFluidBase;
-import techreborn.blocks.storage.BlockBatBox;
 import techreborn.client.TechRebornCreativeTabMisc;
 import techreborn.init.ModSounds;
 import techreborn.items.ItemTR;
 import techreborn.lib.ModInfo;
-import techreborn.tiles.storage.TileEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import techreborn.client.GuiHandler;
 import techreborn.init.ModBlocks;
-import techreborn.tiles.storage.TileMFE;
+import techreborn.tiles.energy.storage.TileMFE;
 
 import java.util.ArrayList;
 import java.util.List;

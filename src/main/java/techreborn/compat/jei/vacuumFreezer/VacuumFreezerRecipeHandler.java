@@ -27,15 +27,15 @@ public class VacuumFreezerRecipeHandler implements IRecipeHandler<VacuumFreezerR
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
-		return RecipeCategoryUids.SCRAPBOX;
+	public String getRecipeCategoryUid(@Nonnull VacuumFreezerRecipe recipe) {
+		return RecipeCategoryUids.VACUUM_FREEZER;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull VacuumFreezerRecipe recipe) {
-		return RecipeCategoryUids.SCRAPBOX;
+	public String getRecipeCategoryUid()
+	{
+		return RecipeCategoryUids.VACUUM_FREEZER;
 	}
 
 	@Nonnull

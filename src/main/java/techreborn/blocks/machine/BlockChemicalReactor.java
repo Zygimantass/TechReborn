@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileChemicalReactor;
+import techreborn.tiles.energy.tier1.TileChemicalReactor;
 
 public class BlockChemicalReactor extends BlockMachineBase implements IRotationTexture
 {

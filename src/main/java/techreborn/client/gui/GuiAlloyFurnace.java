@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.ContainerAlloyFurnace;
+import techreborn.client.container.energy.tier0.ContainerAlloyFurnace;
 import techreborn.tiles.TileAlloyFurnace;
 
 public class GuiAlloyFurnace extends GuiContainer
