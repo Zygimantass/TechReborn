@@ -14,7 +14,7 @@ import techreborn.tiles.storage.TileMFSU;
 public class GuiMFSU extends GuiContainer
 {
 
-	public static final ResourceLocation texture = new ResourceLocation("techreborn", "textures/gui/mfsu.png");
+	public static final ResourceLocation texture = new ResourceLocation("techreborn", "textures/gui/hvStorage.png");
 
 	TileMFSU generator;
 
@@ -63,7 +63,7 @@ public class GuiMFSU extends GuiContainer
 
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
 	{
-		String name = I18n.translateToLocal("tile.techreborn.mfsu.name");
+		String name = I18n.translateToLocal("tile.techreborn.hvStorage.name");
 		this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6,
 				4210752);
 

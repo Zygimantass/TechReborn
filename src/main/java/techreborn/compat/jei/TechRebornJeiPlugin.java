@@ -206,7 +206,7 @@ import java.util.List;
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ChemicalReactor),
 				RecipeCategoryUids.CHEMICAL_REACTOR);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.Extractor), RecipeCategoryUids.EXTRACTOR);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.FusionControlComputer),
+		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.fusionReactorComputer),
 				RecipeCategoryUids.FUSION_REACTOR);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.Grinder), RecipeCategoryUids.GRINDER);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ImplosionCompressor),

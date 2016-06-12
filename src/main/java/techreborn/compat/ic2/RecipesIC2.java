@@ -27,7 +27,7 @@ public class RecipesIC2 implements ICompatModule {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        recipeDuplicateList.add(new RecipeDuplicate(new ItemStack(ModBlocks.machineframe, 0, 1), IC2Items.getItem("resource","machine")));
+        recipeDuplicateList.add(new RecipeDuplicate(new ItemStack(ModBlocks.machineBlock, 0, 1), IC2Items.getItem("resource","machine")));
 
         for(RecipeDuplicate duplicate : recipeDuplicateList){
             duplicate.add();

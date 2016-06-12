@@ -10,7 +10,7 @@ public class ItemBlockMachineFrame extends ItemBlockBase
 
 	public ItemBlockMachineFrame(Block block)
 	{
-		super(ModBlocks.machineframe, ModBlocks.machineframe, BlockMachineFrame.types);
+		super(ModBlocks.machineBlock, ModBlocks.machineBlock, BlockMachineFrame.types);
 	}
 
 }

@@ -38,7 +38,7 @@ public class BlockMachineFrame extends BaseBlock implements ITexturedBlock
 		{
 			if (types[i].equalsIgnoreCase(name))
 			{
-				return new ItemStack(ModBlocks.machineframe, count, i);
+				return new ItemStack(ModBlocks.machineBlock, count, i);
 			}
 		}
 		throw new InvalidParameterException("The part " + name + " could not be found.");

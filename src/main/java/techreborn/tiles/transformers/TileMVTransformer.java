@@ -12,7 +12,7 @@ public class TileMVTransformer extends TileTransformer
 
 	public TileMVTransformer()
 	{
-		super("MVTransformer", ModBlocks.mvt, EnumPowerTier.HIGH, ConfigTechReborn.MVTransformerMaxInput, ConfigTechReborn.MVTransformerMaxOutput, ConfigTechReborn.LVTransformerMaxInput*2);
+		super("MVTransformer", ModBlocks.mvTransformer, EnumPowerTier.HIGH, ConfigTechReborn.MVTransformerMaxInput, ConfigTechReborn.MVTransformerMaxOutput, ConfigTechReborn.LVTransformerMaxInput*2);
 	}
 
 	@Override

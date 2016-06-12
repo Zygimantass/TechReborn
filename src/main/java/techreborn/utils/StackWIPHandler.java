@@ -23,11 +23,11 @@ public class StackWIPHandler
 	public StackWIPHandler()
 	{
 		wipBlocks.add(ModBlocks.LightningRod);
-		wipBlocks.add(ModBlocks.MagicalAbsorber);
+		wipBlocks.add(ModBlocks.magicEnergyAbsorber);
 		wipBlocks.add(ModBlocks.ChunkLoader);
 		wipBlocks.add(ModBlocks.ElectricCraftingTable);
 		wipBlocks.add(ModBlocks.chargeBench);
-		wipBlocks.add(ModBlocks.Magicenergeyconverter);
+		wipBlocks.add(ModBlocks.magicEnergyConverter);
 
 		addHead("modmuss50");
 		addHead("Gigabit101");

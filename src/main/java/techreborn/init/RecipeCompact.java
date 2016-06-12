@@ -8,7 +8,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import techreborn.api.recipe.IRecipeCompact;
 import techreborn.blocks.BlockMachineFrame;
-import techreborn.compat.CompatManager;
 import techreborn.items.*;
 import techreborn.parts.powerCables.ItemStandaloneCables;
 
@@ -64,9 +63,9 @@ public class RecipeCompact implements IRecipeCompact
 		recipes.put("pump", new ItemStack(ModBlocks.pump));
 //		recipes.put("teleporter", new ItemStack(ModItems.missingRecipe));
 		recipes.put("advancedAlloy", ItemIngots.getIngotByName("advancedAlloy"));
-		recipes.put("lvTransformer", new ItemStack(ModBlocks.lvt));
-		recipes.put("mvTransformer", new ItemStack(ModBlocks.mvt));
-		recipes.put("hvTransformer", new ItemStack(ModBlocks.hvt));
+		recipes.put("lvTransformer", new ItemStack(ModBlocks.lvTransformer));
+		recipes.put("mvTransformer", new ItemStack(ModBlocks.mvTransformer));
+		recipes.put("hvTransformer", new ItemStack(ModBlocks.hvTransformer));
 		recipes.put("windMill", new ItemStack(ModBlocks.windMill));
 		recipes.put("energyCrystal", new ItemStack(ModItems.energyCrystal));
 		recipes.put("lapotronCrystal", new ItemStack(ModItems.lapotronCrystal));

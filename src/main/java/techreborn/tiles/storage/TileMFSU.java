@@ -11,6 +11,6 @@ public class TileMFSU extends TileEnergyStorage
 
 	public TileMFSU()
 	{
-		super("MFSU", 2, ModBlocks.mfsu, EnumPowerTier.HIGH, 2048, 2048, 40000000);
+		super("MFSU", 2, ModBlocks.hvStorage, EnumPowerTier.HIGH, 2048, 2048, 40000000);
 	}
 }
