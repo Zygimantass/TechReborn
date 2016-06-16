@@ -1,5 +1,6 @@
 package techreborn.tiles.fusionReactor;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -7,16 +8,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.tile.IInventoryProvider;
+import reborncore.common.container.RebornContainer;
 import reborncore.common.tile.TileMachineInventory;
 import reborncore.common.util.ItemUtils;
+import reborncore.common.util.inventory.Inventory;
 import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
 import techreborn.init.ModBlocks;
 
 public class TileEntityFusionController extends TileMachineInventory
 {
-
-	public Inventory inventory = new Inventory(3, "TileEntityFusionController", 64, this);
 
 	// 0= no coils, 1 = coils
 	public int coilStatus = 0;
@@ -31,7 +32,7 @@ public class TileEntityFusionController extends TileMachineInventory
 
 	public TileEntityFusionController()
 	{
-		super(EnumPowerTier.EXTREME, 100000000, );
+		super(EnumPowerTier.EXTREME, 100000000, 0, 0, "TileEntityFusionController", 3, 64);
 	}
 
 	@Override
@@ -169,16 +170,16 @@ public class TileEntityFusionController extends TileMachineInventory
 			{
 				if (currentRecipe == null)
 				{
-					if (inventory.hasChanged || crafingTickTime != 0)
+					if (getInventory().hasChanged || crafingTickTime != 0)
 					{
 						for (FusionReactorRecipe reactorRecipe : FusionReactorRecipeHelper.reactorRecipes)
 						{
-							if (ItemUtils.isItemEqual(getStackInSlot(topStackSlot), reactorRecipe.getTopInput(), true,
+							if (ItemUtils.isItemEqual(getInventory().getStackInSlot(topStackSlot), reactorRecipe.getTopInput(), true,
 									true, true))
 							{
 								if (reactorRecipe.getBottomInput() != null)
 								{
-									if (!ItemUtils.isItemEqual(getStackInSlot(bottomStackSlot),
+									if (!ItemUtils.isItemEqual(getInventory().getStackInSlot(bottomStackSlot),
 											reactorRecipe.getBottomInput(), true, true, true))
 									{
 										break;
@@ -203,7 +204,7 @@ public class TileEntityFusionController extends TileMachineInventory
 					}
 				} else
 				{
-					if (inventory.hasChanged)
+					if (getInventory().hasChanged)
 					{
 						if (!validateRecipe())
 						{
@@ -244,17 +245,17 @@ public class TileEntityFusionController extends TileMachineInventory
 						{
 							if (canFitStack(currentRecipe.getOutput(), outputStackSlot, true))
 							{
-								if (getStackInSlot(outputStackSlot) == null)
+								if (getInventory().getStackInSlot(outputStackSlot) == null)
 								{
-									setInventorySlotContents(outputStackSlot, currentRecipe.getOutput().copy());
+									getInventory().setInventorySlotContents(outputStackSlot, currentRecipe.getOutput().copy());
 								} else
 								{
-									decrStackSize(outputStackSlot, -currentRecipe.getOutput().stackSize);
+									getInventory().decrStackSize(outputStackSlot, -currentRecipe.getOutput().stackSize);
 								}
-								decrStackSize(topStackSlot, currentRecipe.getTopInput().stackSize);
+								getInventory().decrStackSize(topStackSlot, currentRecipe.getTopInput().stackSize);
 								if (currentRecipe.getBottomInput() != null)
 								{
-									decrStackSize(bottomStackSlot, currentRecipe.getBottomInput().stackSize);
+									getInventory().decrStackSize(bottomStackSlot, currentRecipe.getBottomInput().stackSize);
 								}
 								resetCrafter();
 							}
@@ -270,19 +271,29 @@ public class TileEntityFusionController extends TileMachineInventory
 			}
 		}
 
-		if (inventory.hasChanged)
+		if (getInventory().inventory.hasChanged)
 		{
-			inventory.hasChanged = false;
+			getInventory().inventory.hasChanged = false;
 		}
+	}
+
+	@Override
+	public void machineFinish() {
+
+	}
+
+	@Override
+	public ItemStack getWrenchDrop(EntityPlayer p0) {
+		return null;
 	}
 
 	private boolean validateRecipe()
 	{
-		if (ItemUtils.isItemEqual(getStackInSlot(topStackSlot), currentRecipe.getTopInput(), true, true, true))
+		if (ItemUtils.isItemEqual(getInventory().getStackInSlot(topStackSlot), currentRecipe.getTopInput(), true, true, true))
 		{
 			if (currentRecipe.getBottomInput() != null)
 			{
-				if (!ItemUtils.isItemEqual(getStackInSlot(bottomStackSlot), currentRecipe.getBottomInput(), true, true,
+				if (!ItemUtils.isItemEqual(getInventory().getStackInSlot(bottomStackSlot), currentRecipe.getBottomInput(), true, true,
 						true))
 				{
 					return false;
@@ -311,13 +322,13 @@ public class TileEntityFusionController extends TileMachineInventory
 		{
 			return true;
 		}
-		if (inventory.getStackInSlot(slot) == null)
+		if (getInventory().getStackInSlot(slot) == null)
 		{
 			return true;
 		}
-		if (ItemUtils.isItemEqual(inventory.getStackInSlot(slot), stack, true, true, oreDic))
+		if (ItemUtils.isItemEqual(getInventory().getStackInSlot(slot), stack, true, true, oreDic))
 		{
-			if (stack.stackSize + inventory.getStackInSlot(slot).stackSize <= stack.getMaxStackSize())
+			if (stack.stackSize + getInventory().getStackInSlot(slot).stackSize <= stack.getMaxStackSize())
 			{
 				return true;
 			}
@@ -325,26 +336,9 @@ public class TileEntityFusionController extends TileMachineInventory
 		return false;
 	}
 
+
 	@Override
-	public String getName()
-	{
+	public RebornContainer getContainer() {
 		return null;
-	}
-
-	@Override
-	public boolean hasCustomName()
-	{
-		return false;
-	}
-
-	@Override
-	public ITextComponent getDisplayName()
-	{
-		return null;
-	}
-
-	@Override
-	public Inventory getInventory() {
-		return inventory;
 	}
 }
