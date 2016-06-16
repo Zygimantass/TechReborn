@@ -20,7 +20,7 @@ public class BlockMVTransformer extends BlockTransformer
 
 	public BlockMVTransformer()
 	{
-		super("mvtransformer");
+		super("mvtransformer", "mv");
 	}
 
 	@Override
