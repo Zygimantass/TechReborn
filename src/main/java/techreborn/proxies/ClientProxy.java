@@ -31,6 +31,7 @@ import techreborn.client.StackToolTipEvent;
 import techreborn.client.hud.ChargeHud;
 import techreborn.client.keybindings.KeyBindings;
 import techreborn.client.render.entitys.RenderNukePrimed;
+import techreborn.client.render.tiles.GlowHandler;
 import techreborn.entitys.EntityNukePrimed;
 import techreborn.init.ModBlocks;
 import techreborn.init.ModItems;
@@ -46,10 +47,14 @@ public class ClientProxy extends CommonProxy
 
 	public static final ModelResourceLocation MODEL_DYNAMIC_CELL = new ModelResourceLocation(new ResourceLocation("techreborn", "dyncell"), "inventory");
 
+	public static GlowHandler handler;
+
 	@Override
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
+		GlowHandler.createAndLoad();
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityNukePrimed.class, new RenderManagerNuke());
 
 		ManualLoader loader = new ManualLoader(new File(event.getModConfigurationDirectory(), "techreborn"));
@@ -163,8 +168,8 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void registerCustomBlockSateLocation(Block block, String resourceLocation) {
-		super.registerCustomBlockSateLocation(block, resourceLocation);
+	public void registerCustomBlockStateLocation(Block block, String resourceLocation, boolean item) {
+		super.registerCustomBlockStateLocation(block, resourceLocation, item);
 		ModelLoader.setCustomStateMapper(block, new DefaultStateMapper()
 		{
 			@Override
@@ -175,7 +180,35 @@ public class ClientProxy extends CommonProxy
 				return new ModelResourceLocation(resourceDomain + ':' + resourceLocation, propertyString);
 			}
 		});
-		String resourceDomain = Block.REGISTRY.getNameForObject(block).getResourceDomain();
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(resourceDomain + ':' + resourceLocation, "inventory"));
+		if(item){
+			String resourceDomain = Block.REGISTRY.getNameForObject(block).getResourceDomain();
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(resourceDomain + ':' + resourceLocation, "inventory"));
+		}
 	}
+
+
+	@Override
+	public void registerSubItemInventoryLocation(Item item, int meta, String location, String name) {
+		super.registerSubItemInventoryLocation(item, meta, location, name);
+		Block block = Block.getBlockFromItem(item);
+		if(block != null){
+			IBlockState state = block.getStateFromMeta(meta);
+			String resourceDomain = Block.REGISTRY.getNameForObject(state.getBlock()).getResourceDomain();
+			StateMapperBase base = new StateMapperBase() {
+				@Override
+				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+					return null;
+				}
+			};
+			String propertyString = base.getPropertyString(state.getProperties());
+			ModelResourceLocation resourceLocation = new ModelResourceLocation(resourceDomain + ':' + location, propertyString);
+			ModelLoader.setCustomModelResourceLocation(item, meta, resourceLocation);
+		} else {
+			ResourceLocation loc = item.getRegistryName();
+			String resourceDomain = Item.REGISTRY.getNameForObject(item).getResourceDomain();
+			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resourceDomain + ':' + loc, "type=" + name));
+		}
+
+	}
+
 }

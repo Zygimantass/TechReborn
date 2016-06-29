@@ -6,9 +6,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.container.RebornContainer;
+import reborncore.api.tile.IInventoryProvider;
 import reborncore.common.tile.TileMachineInventory;
 import reborncore.common.util.ItemUtils;
+import reborncore.common.util.inventory.Inventory;
 import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
 import techreborn.client.container.energy.tier3.ContainerFusionReactor;
@@ -31,7 +32,7 @@ public class TileEntityFusionController extends TileMachineInventory {
 
 	public TileEntityFusionController()
 	{
-		super(EnumPowerTier.EXTREME, 100000000, 0, 1, "TileFusionController", 3, 64);
+		super(EnumPowerTier.EXTREME, 100000000, );
 	}
 
 	@Override
