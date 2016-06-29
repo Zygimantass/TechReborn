@@ -72,7 +72,8 @@ import techreborn.itemblocks.ItemBlockRubberSapling;
 import techreborn.itemblocks.ItemBlockStorage;
 import techreborn.itemblocks.ItemBlockStorage2;
 import techreborn.tiles.*;
-import techreborn.tiles.energy.storage.TileChargeBench;
+import techreborn.tiles.energy.storage.*;
+import techreborn.tiles.energy.tier0.TileIronAlloyFurnace;
 import techreborn.tiles.energy.tier0.TileIronFurnace;
 import techreborn.tiles.energy.tier1.*;
 import techreborn.tiles.energy.tier2.*;
@@ -89,14 +90,11 @@ import techreborn.tiles.energy.generator.TileThermalGenerator;
 import techreborn.tiles.energy.generator.TileWaterMill;
 import techreborn.tiles.energy.generator.TileWindMill;
 import techreborn.tiles.idsu.TileIDSU;
-import techreborn.tiles.lesu.TileLesu;
-import techreborn.tiles.lesu.TileLesuStorage;
-import techreborn.tiles.energy.storage.TileBatBox;
-import techreborn.tiles.energy.storage.TileMFE;
-import techreborn.tiles.energy.storage.TileMFSU;
 import techreborn.tiles.energy.transformer.TileHVTransformer;
 import techreborn.tiles.energy.transformer.TileLVTransformer;
 import techreborn.tiles.energy.transformer.TileMVTransformer;
+import techreborn.tiles.lesu.TileLESU;
+import techreborn.tiles.lesu.TileLESUStorage;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -207,7 +205,7 @@ public class ModBlocks
 
 		BlastFurnace = new BlockBlastFurnace(Material.ROCK);
 		registerBlock(BlastFurnace, "blastFurnace");
-		GameRegistry.registerTileEntity(TileBlastFurnace.class, "TileBlastFurnaceTR");
+		GameRegistry.registerTileEntity(TileIndustrialBlastFurnace.class, "TileBlastFurnaceTR");
 
 		AlloySmelter = new BlockAlloySmelter(Material.ROCK);
 		registerBlock(AlloySmelter, "alloySmelter");
@@ -285,7 +283,7 @@ public class ModBlocks
 
 		AlloyFurnace = new BlockAlloyFurnace(Material.ROCK);
 		registerBlock(AlloyFurnace, "alloyfurnace");
-		GameRegistry.registerTileEntity(TileAlloyFurnace.class, "TileAlloyFurnaceTR");
+		GameRegistry.registerTileEntity(TileIronAlloyFurnace.class, "TileAlloyFurnaceTR");
 
 		ChemicalReactor = new BlockChemicalReactor(Material.ROCK);
 		registerBlock(ChemicalReactor, "chemicalreactor");
@@ -297,18 +295,18 @@ public class ModBlocks
 
 		Aesu = new BlockAESU();
 		registerBlock(Aesu, ItemBlockAesu.class, "aesu");
-		GameRegistry.registerTileEntity(TileAesu.class, "TileAesuTR");
+		GameRegistry.registerTileEntity(TileAESU.class, "TileAesuTR");
 
 		Lesu = new BlockLESU();
 		registerBlock(Lesu, "lesu");
-		GameRegistry.registerTileEntity(TileLesu.class, "TileLesuTR");
+		GameRegistry.registerTileEntity(TileLESU.class, "TileLesuTR");
 
 		Supercondensator = new BlockSupercondensator(Material.ROCK);
 		registerBlock(Supercondensator, "supercondensator");
 
 		LesuStorage = new BlockLESUStorage(Material.ROCK);
 		registerBlock(LesuStorage, "lesustorage");
-		GameRegistry.registerTileEntity(TileLesuStorage.class, "TileLesuStorageTR");
+		GameRegistry.registerTileEntity(TileLESUStorage.class, "TileLesuStorageTR");
 
 		Distillationtower = new BlockDistillationTower(Material.ROCK);
 		registerBlock(Distillationtower, "distillationtower");

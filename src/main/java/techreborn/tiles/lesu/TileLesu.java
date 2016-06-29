@@ -21,7 +21,7 @@ public class TileLESU extends TileEnergyStorage
 
 	public TileLESU()
 	{
-		super("LESU", ModBlocks.Lesu, EnumPowerTier.EXTREME, 8192, -1, -1);
+		super("LESU", ModBlocks.Lesu, EnumPowerTier.EXTREME, 8192);
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class TileLESU extends TileEnergyStorage
 				}
 			}
 		}
-		setMaxStorage(((connectedBlocks + 1) * ConfigTechReborn.LesuStoragePerBlock));
-		setMaxOutput((connectedBlocks * ConfigTechReborn.ExtraOutputPerLesuBlock) + ConfigTechReborn.BaseLesuOutput);
+//		setMaxStorage(((connectedBlocks + 1) * ConfigTechReborn.LesuStoragePerBlock));
+//		setMaxOutput((connectedBlocks * ConfigTechReborn.ExtraOutputPerLesuBlock) + ConfigTechReborn.BaseLesuOutput);
 
 		if (ticks == ConfigTechReborn.AverageEuOutTickTime) {
             euChange = -1;

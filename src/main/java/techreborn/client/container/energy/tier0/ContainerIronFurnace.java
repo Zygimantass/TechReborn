@@ -12,11 +12,13 @@ public class ContainerIronFurnace extends ContainerBase {
 	public ContainerIronFurnace(TileIronFurnace tileEntity, EntityPlayer player) {
 		super(tileEntity, player);
 
-		// input
-		this.addSlotToContainer(new SlotInput(tileEntity.getInventory(), getNextSlotIndex(), 56, 17));
-		this.addSlotToContainer(new SlotOutput(tileEntity.getInventory(), getNextSlotIndex(), 116, 34));
-
 		// Fuel
 		this.addSlotToContainer(new SlotFurnaceFuel(tileEntity.getInventory(), getNextSlotIndex(), 56, 53));
+
+		// Output
+		this.addSlotToContainer(new SlotOutput(tileEntity.getInventory(), getNextSlotIndex(), 116, 34));
+
+		// Input
+		this.addSlotToContainer(new SlotInput(tileEntity.getInventory(), getNextSlotIndex(), 56, 17));
 	}
 }

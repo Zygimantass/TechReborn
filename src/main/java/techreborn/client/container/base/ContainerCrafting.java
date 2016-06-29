@@ -8,7 +8,7 @@ import reborncore.api.recipe.IRecipeCrafterProvider;
 import reborncore.common.powerSystem.TileEnergyBase;
 import reborncore.common.recipes.RecipeCrafter;
 
-public abstract class ContainerCrafting extends ContainerUpgradeable {
+public abstract class ContainerCrafting extends ContainerBase {
 
 	private RecipeCrafter crafter;
 

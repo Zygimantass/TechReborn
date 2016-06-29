@@ -5,26 +5,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.common.blocks.BlockMachineBase;
-import reborncore.common.powerSystem.TilePowerAcceptor;
+import reborncore.common.powerSystem.TileEnergyBase;
 import reborncore.common.util.WorldUtils;
 
 import java.util.Iterator;
 
-public class TilePlayerDectector extends TilePowerAcceptor
+public class TilePlayerDectector extends TileEnergyBase
 {
 
-	public String owenerUdid = "";
-	boolean redstone = false;
+	public String ownerUDID = "";
+	private boolean redstone = false;
 
-	public TilePlayerDectector()
-	{
-		super(1);
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return 10000;
+	public TilePlayerDectector() {
+		super(EnumPowerTier.LOW, 10000);
 	}
 
 	@Override
@@ -40,31 +33,13 @@ public class TilePlayerDectector extends TilePowerAcceptor
 	}
 
 	@Override
-	public double getMaxOutput()
-	{
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 32;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
-	}
-
-	@Override
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
+		if(getWorld().getWorldTime() % 20 == 0)
 		{
-			boolean lastRedstone = redstone;
-			redstone = false;
+			boolean lastRedstone = this.redstone;
+			this.redstone = false;
 			if (canUseEnergy(10))
 			{
 				Iterator tIterator = super.worldObj.playerEntities.iterator();
@@ -81,13 +56,13 @@ public class TilePlayerDectector extends TilePowerAcceptor
 							redstone = true;
 						} else if (meta == 1)
 						{// Others
-							if (!owenerUdid.isEmpty() && !owenerUdid.equals(player.getUniqueID().toString()))
+							if (!this.ownerUDID.isEmpty() && !this.ownerUDID.equals(player.getUniqueID().toString()))
 							{
 								redstone = true;
 							}
 						} else
 						{// You
-							if (!owenerUdid.isEmpty() && owenerUdid.equals(player.getUniqueID().toString()))
+							if (!this.ownerUDID.isEmpty() && this.ownerUDID.equals(player.getUniqueID().toString()))
 							{
 								redstone = true;
 							}
@@ -107,21 +82,21 @@ public class TilePlayerDectector extends TilePowerAcceptor
 
 	public boolean isProvidingPower()
 	{
-		return redstone;
+		return this.redstone;
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		super.readFromNBT(tag);
-		owenerUdid = tag.getString("ownerID");
+		this.ownerUDID = tag.getString("ownerID");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
-		tag.setString("ownerID", owenerUdid);
+		tag.setString("ownerID", this.ownerUDID);
 		return tag;
 	}
 }

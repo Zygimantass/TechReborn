@@ -10,7 +10,7 @@ import reborncore.common.packets.PacketHandler;
 import reborncore.common.powerSystem.PowerSystem;
 import techreborn.client.container.energy.storage.ContainerAESU;
 import techreborn.packets.PacketAesu;
-import techreborn.tiles.TileAesu;
+import techreborn.tiles.energy.storage.TileAESU;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,11 +20,11 @@ public class GuiAESU extends GuiContainer
 
 	private static final ResourceLocation texture = new ResourceLocation("techreborn", "textures/gui/aesu.png");
 
-	TileAesu aesu;
+	TileAESU aesu;
 
 	ContainerAESU containerAesu;
 
-	public GuiAESU(EntityPlayer player, TileAesu tileaesu)
+	public GuiAESU(EntityPlayer player, TileAESU tileaesu)
 	{
 		super(new ContainerAESU(tileaesu, player));
 		this.xSize = 176;
@@ -62,7 +62,7 @@ public class GuiAESU extends GuiContainer
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerAesu.euOut) + " /tick", 10, 20,
 				Color.WHITE.getRGB());
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerAesu.storedEu) + " ", 10, 30,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerAesu.getEnergy()) + " ", 10, 30,
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerAesu.euChange) + " change", 10, 40,
 				Color.WHITE.getRGB());

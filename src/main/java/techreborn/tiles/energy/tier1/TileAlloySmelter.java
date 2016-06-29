@@ -1,26 +1,20 @@
 package techreborn.tiles.energy.tier1;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.recipe.IRecipeCrafterProvider;
-import reborncore.api.tile.IInventoryProvider;
-import reborncore.common.IWrenchable;
+import reborncore.common.container.RebornContainer;
 import reborncore.common.recipes.RecipeCrafter;
 import reborncore.common.tile.TileMachineInventory;
 import techreborn.api.Reference;
+import techreborn.client.container.energy.tier1.ContainerAlloySmelter;
 import techreborn.init.ModBlocks;
-import techreborn.utils.upgrade.UpgradeHandler;
 
-public class TileAlloySmelter extends TileMachineInventory implements IWrenchable,IInventoryProvider, ISidedInventory, IRecipeCrafterProvider
-{
+public class TileAlloySmelter extends TileMachineInventory implements IRecipeCrafterProvider {
 
-	public int tickTime;
 	public RecipeCrafter crafter;
-	//UpgradeHandler upgrades;
 
 	public TileAlloySmelter()
 	{
@@ -28,41 +22,27 @@ public class TileAlloySmelter extends TileMachineInventory implements IWrenchabl
 		// Input slots
 		int[] inputs = new int[]{0, 1};
 		int[] outputs = new int[]{2};
-		crafter = new RecipeCrafter(Reference.alloySmelteRecipe, this, 2, 1, getInventory(), inputs, outputs);
+		this.crafter = new RecipeCrafter(Reference.alloySmelteRecipe, this, 2, 1, getInventory(), inputs, outputs);
 		//upgrades = new UpgradeHandler(crafter, inventory, 4, 5, 6, 7);
 	}
 
 	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
+	public void updateEntity() {
+		//super.updateEntity();
 		crafter.updateEntity();
-		//upgrades.tick();
-		//charge(3);
 	}
 
 	@Override
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, EnumFacing side)
-	{
-		return false;
+	public void machineTick() {
+		if(!this.crafter.machineTick())
+			return;
+
+		super.machineTick();
 	}
 
 	@Override
-	public EnumFacing getFacing()
-	{
-		return getFacingEnum();
-	}
-
-	@Override
-	public boolean wrenchCanRemove(EntityPlayer entityPlayer)
-	{
-		return entityPlayer.isSneaking();
-	}
-
-	@Override
-	public float getWrenchDropRate()
-	{
-		return 1.0F;
+	public void machineFinish() {
+		this.crafter.machineFinish();
 	}
 
 	@Override
@@ -71,24 +51,18 @@ public class TileAlloySmelter extends TileMachineInventory implements IWrenchabl
 		return new ItemStack(ModBlocks.AlloySmelter, 1);
 	}
 
-	public boolean isComplete()
-	{
-		return false;
-	}
-
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound)
 	{
 		super.readFromNBT(tagCompound);
-		inventory.readFromNBT(tagCompound);
-		crafter.readFromNBT(tagCompound);
+		//crafter.readFromNBT(tagCompound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
 	{
 		super.writeToNBT(tagCompound);
-		crafter.writeToNBT(tagCompound);
+		//crafter.writeToNBT(tagCompound);
 		return tagCompound;
 	}
 
@@ -103,25 +77,25 @@ public class TileAlloySmelter extends TileMachineInventory implements IWrenchabl
 	// }
 
 	// ISidedInventory
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2 } : new int[] { 0, 1, 2 };
-	}
-
-	@Override
-	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		if (slotIndex == 2)
-			return false;
-		return isItemValidForSlot(slotIndex, itemStack);
-	}
-
-	@Override
-	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		return slotIndex == 2;
-	}
+//	@Override
+//	public int[] getSlotsForFace(EnumFacing side)
+//	{
+//		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2 } : new int[] { 0, 1, 2 };
+//	}
+//
+//	@Override
+//	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		if (slotIndex == 2)
+//			return false;
+//		return isItemValidForSlot(slotIndex, itemStack);
+//	}
+//
+//	@Override
+//	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		return slotIndex == 2;
+//	}
 
 	public int getProgressScaled(int scale)
 	{
@@ -133,7 +107,17 @@ public class TileAlloySmelter extends TileMachineInventory implements IWrenchabl
 	}
 
 	@Override
+	public void updateInventory() {
+		this.crafter.updateInventory();
+	}
+
+	@Override
 	public RecipeCrafter getRecipeCrafter() {
 		return crafter;
+	}
+
+	@Override
+	public RebornContainer getContainer() {
+		return RebornContainer.getContainerFromClass(ContainerAlloySmelter.class, this);
 	}
 }

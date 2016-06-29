@@ -1,8 +1,5 @@
 package techreborn.blocks.iron_machines;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +13,10 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.TileAlloyFurnace;
+import techreborn.tiles.energy.tier0.TileIronAlloyFurnace;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockAlloyFurnace extends BlockMachineBase implements IRotationTexture
 {
@@ -33,7 +33,7 @@ public class BlockAlloyFurnace extends BlockMachineBase implements IRotationText
 	@Override
 	public TileEntity createNewTileEntity(World world, int p_149915_2_)
 	{
-		return new TileAlloyFurnace();
+		return new TileIronAlloyFurnace();
 	}
 
 	@Override

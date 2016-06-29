@@ -1,8 +1,5 @@
 package techreborn.blocks.storage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +12,10 @@ import net.minecraft.world.World;
 import reborncore.common.blocks.BlockMachineBase;
 import reborncore.common.blocks.IAdvancedRotationTexture;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.lesu.TileLesuStorage;
+import techreborn.tiles.lesu.TileLESUStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockLESUStorage extends BlockMachineBase implements IAdvancedRotationTexture
 {
@@ -33,18 +33,18 @@ public class BlockLESUStorage extends BlockMachineBase implements IAdvancedRotat
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack)
 	{
 		super.onBlockPlacedBy(world, x, y, z, player, itemstack);
-		if (world.getTileEntity(new BlockPos(x, y, z)) instanceof TileLesuStorage)
+		if (world.getTileEntity(new BlockPos(x, y, z)) instanceof TileLESUStorage)
 		{
-			((TileLesuStorage) world.getTileEntity(new BlockPos(x, y, z))).rebuildNetwork();
+			((TileLESUStorage) world.getTileEntity(new BlockPos(x, y, z))).rebuildNetwork();
 		}
 	}
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
 	{
-		if (world.getTileEntity(new BlockPos(x, y, z)) instanceof TileLesuStorage)
+		if (world.getTileEntity(new BlockPos(x, y, z)) instanceof TileLESUStorage)
 		{
-			((TileLesuStorage) world.getTileEntity(new BlockPos(x, y, z))).removeFromNetwork();
+			((TileLESUStorage) world.getTileEntity(new BlockPos(x, y, z))).removeFromNetwork();
 		}
 		super.breakBlock(world, x, y, z, block, meta);
 	}
@@ -60,7 +60,7 @@ public class BlockLESUStorage extends BlockMachineBase implements IAdvancedRotat
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
 	{
-		return new TileLesuStorage();
+		return new TileLESUStorage();
 	}
 
 	public boolean shouldConnectToBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int meta)

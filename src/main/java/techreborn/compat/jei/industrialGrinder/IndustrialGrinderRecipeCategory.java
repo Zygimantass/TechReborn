@@ -1,7 +1,5 @@
 package techreborn.compat.jei.industrialGrinder;
 
-import javax.annotation.Nonnull;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -14,7 +12,8 @@ import net.minecraft.util.text.translation.I18n;
 import techreborn.client.gui.GuiIndustrialGrinder;
 import techreborn.compat.jei.RecipeCategoryUids;
 import techreborn.compat.jei.RecipeUtil;
-import techreborn.tiles.energy.tier2.TileIndustrialGrinder;
+
+import javax.annotation.Nonnull;
 
 public class IndustrialGrinderRecipeCategory extends BlankRecipeCategory
 {
@@ -76,7 +75,7 @@ public class IndustrialGrinderRecipeCategory extends BlankRecipeCategory
 		guiItemStacks.init(OUTPUT_SLOTS[3], false, 123, 19);
 
 		IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
-		guiFluidStacks.init(INPUT_TANKS[0], true, 4, 4, 12, 47, TileIndustrialGrinder.TANK_CAPACITY, true, tankOverlay);
+		guiFluidStacks.init(INPUT_TANKS[0], true, 4, 4, 12, 47, 16000, true, tankOverlay);
 
 		if (recipeWrapper instanceof IndustrialGrinderRecipeWrapper)
 		{

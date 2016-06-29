@@ -12,8 +12,6 @@ import techreborn.api.Reference;
 import techreborn.client.container.energy.tier1.ContainerGrinder;
 import techreborn.init.ModBlocks;
 
-import java.util.List;
-
 public class TileGrinder extends TileMachineInventory implements IRecipeCrafterProvider, IContainerProvider
 {
 	public RecipeCrafter crafter;
@@ -30,7 +28,7 @@ public class TileGrinder extends TileMachineInventory implements IRecipeCrafterP
 
 	@Override
 	public void machineTick() {
-		if(!crafter.machineTick())
+		if(!this.crafter.machineTick())
 			return;
 
 		super.machineTick();
@@ -38,21 +36,17 @@ public class TileGrinder extends TileMachineInventory implements IRecipeCrafterP
 
 	@Override
 	public void machineFinish() {
-		crafter.machineFinish();
+		this.crafter.machineFinish();
 	}
 
 	@Override
 	public void updateInventory() {
-		crafter.updateInventory();
+		this.crafter.updateInventory();
 	}
 
 	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
 		return new ItemStack(ModBlocks.Grinder, 1);
-	}
-
-	public boolean isComplete() {
-		return false;
 	}
 
 //	// ISidedInventory
@@ -72,25 +66,8 @@ public class TileGrinder extends TileMachineInventory implements IRecipeCrafterP
 //	}
 
 	@Override
-	public double getMaxOutput()
-	{
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 32;
-	}
-
-	@Override public void addInfo(List<String> info, boolean isRealTile)
-	{
-		info.add("Macerator");
-	}
-
-	@Override
 	public RecipeCrafter getRecipeCrafter() {
-		return crafter;
+		return this.crafter;
 	}
 
 	@Override

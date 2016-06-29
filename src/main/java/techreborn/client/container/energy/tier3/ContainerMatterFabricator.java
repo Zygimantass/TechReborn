@@ -61,7 +61,7 @@ public class ContainerMatterFabricator extends ContainerBase {
 	public int getProgressScaled(int scale)
 	{
 		if (progressTime != 0) {
-			return progressTime * scale / tile.maxProgresstime();
+			return progressTime * scale / tileMatterFabricator.maxProgresstime();
 		}
 		return 0;
 	}

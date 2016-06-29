@@ -5,15 +5,15 @@ import net.minecraft.inventory.IContainerListener;
 import reborncore.client.gui.slots.SlotInput;
 import reborncore.client.gui.slots.SlotOutput;
 import techreborn.client.container.base.ContainerCrafting;
-import techreborn.tiles.energy.tier2.TileBlastFurnace;
+import techreborn.tiles.energy.tier2.TileIndustrialBlastFurnace;
 
 public class ContainerIndustrialBlastFurnace extends ContainerCrafting {
 
 	public int heat;
 
-	private TileBlastFurnace tileEntityBlastFurnace;
+	private TileIndustrialBlastFurnace tileEntityBlastFurnace;
 
-	public ContainerIndustrialBlastFurnace(TileBlastFurnace tileEntity, EntityPlayer player) {
+	public ContainerIndustrialBlastFurnace(TileIndustrialBlastFurnace tileEntity, EntityPlayer player) {
 		super(tileEntity, player);
 
 		this.tileEntityBlastFurnace = tileEntity;

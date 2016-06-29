@@ -1,11 +1,8 @@
 package techreborn.client.container.base;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerBeacon;
-import reborncore.api.recipe.IRecipeCrafterProvider;
-import reborncore.client.gui.slots.BaseSlot;
-import reborncore.common.container.RebornContainer;
 import reborncore.common.powerSystem.TileEnergyBase;
+import reborncore.common.powerSystem.TileEnergyUpgradeable;
 import techreborn.api.gui.SlotUpgrade;
 
 /**
@@ -13,7 +10,7 @@ import techreborn.api.gui.SlotUpgrade;
  */
 public abstract class ContainerUpgradeable extends ContainerBase {
 
-    public ContainerUpgradeable(TileEnergyBase tileEntity, EntityPlayer player) {
+    public ContainerUpgradeable(TileEnergyUpgradeable tileEntity, EntityPlayer player) {
         super(tileEntity, player);
 
         /* Initialize Upgrade Slots */

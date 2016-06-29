@@ -1,6 +1,7 @@
 package techreborn.client.container.base;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import reborncore.common.container.RebornContainer;
 import reborncore.common.powerSystem.TileEnergyBase;
 
@@ -9,12 +10,12 @@ import reborncore.common.powerSystem.TileEnergyBase;
  */
 public abstract class ContainerBase extends RebornContainer {
 
-    protected TileEnergyBase tileEntity;
+    protected TileEntity tileEntity;
     protected EntityPlayer player;
 
     private int lastSlotIndex;
 
-    public ContainerBase(TileEnergyBase tileEntity, EntityPlayer player) {
+    public ContainerBase(TileEntity tileEntity, EntityPlayer player) {
         super();
 
         this.tileEntity = tileEntity;
@@ -31,7 +32,11 @@ public abstract class ContainerBase extends RebornContainer {
     }
 
     public int getEnergy() {
-        return (int) tileEntity.getEnergy();
+        if(tileEntity instanceof TileEnergyBase) {
+            return (int) ((TileEnergyBase) tileEntity).getEnergy();
+        }
+
+        return 0;
     }
 
     @Override

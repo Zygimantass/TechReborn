@@ -2,10 +2,8 @@ package techreborn.client.container.energy.storage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import reborncore.client.gui.slots.BaseSlot;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import reborncore.common.container.RebornContainer;
 import techreborn.client.container.base.ContainerEnergyStorage;
 import techreborn.tiles.idsu.TileIDSU;
 

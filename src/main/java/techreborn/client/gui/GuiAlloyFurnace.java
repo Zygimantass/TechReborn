@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.energy.tier0.ContainerAlloyFurnace;
-import techreborn.tiles.TileAlloyFurnace;
+import techreborn.client.container.energy.tier0.ContainerIronAlloyFurnace;
+import techreborn.tiles.energy.tier0.TileIronAlloyFurnace;
 
 public class GuiAlloyFurnace extends GuiContainer
 {
@@ -14,17 +14,17 @@ public class GuiAlloyFurnace extends GuiContainer
 	private static final ResourceLocation texture = new ResourceLocation("techreborn",
 			"textures/gui/alloy_furnace.png");
 
-	TileAlloyFurnace alloyfurnace;
+	TileIronAlloyFurnace alloyfurnace;
 
-	ContainerAlloyFurnace containerAlloyFurnace;
+	ContainerIronAlloyFurnace containerAlloyFurnace;
 
-	public GuiAlloyFurnace(EntityPlayer player, TileAlloyFurnace tileAlloyFurnace)
+	public GuiAlloyFurnace(EntityPlayer player, TileIronAlloyFurnace tileAlloyFurnace)
 	{
-		super(new ContainerAlloyFurnace(tileAlloyFurnace, player));
+		super(new ContainerIronAlloyFurnace(tileAlloyFurnace, player));
 		this.xSize = 176;
 		this.ySize = 167;
 		this.alloyfurnace = tileAlloyFurnace;
-		this.containerAlloyFurnace = (ContainerAlloyFurnace) this.inventorySlots;
+		this.containerAlloyFurnace = (ContainerIronAlloyFurnace) this.inventorySlots;
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class GuiAlloyFurnace extends GuiContainer
 
 		if (this.alloyfurnace.isBurning())
 		{
-			int i1 = this.alloyfurnace.getBurnTimeRemainingScaled(13);
+			int i1 = 0; //this.alloyfurnace.getBurnTimeRemainingScaled(13);
 			this.drawTexturedModalRect(k + 56, l + 36 + 12 - i1, 176, 12 - i1, 14, i1 + 1);
-			i1 = this.alloyfurnace.getCookProgressScaled(24);
+//			i1 = this.alloyfurnace.getCookProgressScaled(24);
 			this.drawTexturedModalRect(k + 79, l + 34, 176, 14, i1 + 1, 16);
 		}
 	}

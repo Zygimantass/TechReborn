@@ -46,10 +46,10 @@ public class GuiDieselGenerator extends GuiContainer
 		this.fontRendererObj.drawString(I18n.translateToLocalFormatted("container.inventory", new Object[0]), 8,
 				this.ySize - 96 + 2, 4210752);
 		this.fontRendererObj.drawString("Liquid Amount", 10, 20, 16448255);
-		this.fontRendererObj.drawString(containerDieselGenerator.fluid + "", 10, 30, 16448255);
+		this.fontRendererObj.drawString(tile.tank.getFluid() + "", 10, 30, 16448255);
 
 		this.fontRendererObj.drawString("Power Amount", 10, 40, 16448255);
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerDieselGenerator.energy) + "", 10, 50,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(tile.getEnergy()) + "", 10, 50,
 				16448255);
 	}
 }

@@ -1,105 +1,44 @@
 package techreborn.tiles.energy.generator;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraftforge.common.BiomeDictionary;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import techreborn.blocks.generator.BlockSolarPanel;
-
-import java.util.List;
+import techreborn.init.ModBlocks;
 
 /**
  * Created by modmuss50 on 25/02/2016.
  */
-public class TileSolarPanel extends TilePowerAcceptor implements ITickable
-{
+public class TileSolarPanel extends AbstractTileGenerator implements ITickable {
 
-	boolean shouldMakePower = false;
-	boolean lastTickSate = false;
-
-	int powerToAdd;
-
-	public TileSolarPanel()
-	{
-		super(1);
+	public TileSolarPanel() {
+		super(EnumPowerTier.LOW, 1000);
 	}
 
 	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		if(!worldObj.isRemote){
-		if (worldObj.getTotalWorldTime() % 60 == 0)
-		{
-			shouldMakePower = isSunOut();
-
-		}
-		if (shouldMakePower)
-		{
-			powerToAdd = 10;
-			addEnergy(powerToAdd);
-		} else
-		{
-			powerToAdd = 0;
-		}
-
-		worldObj.setBlockState(getPos(),
-				worldObj.getBlockState(this.getPos()).withProperty(BlockSolarPanel.ACTIVE, isSunOut()));
-	}
+	public void updateRequirements() {
+		updateSunVisibility();
 	}
 
-	@Override
-	public void addInfo(List<String> info, boolean isRealTile)
-	{
-		super.addInfo(info, isRealTile);
-		if (isRealTile)
-		{
-			// FIXME: 25/02/2016
-			// info.add(TextFormatting.LIGHT_PURPLE + "Power gen/tick " +
-			// TextFormatting.GREEN + PowerSystem.getLocaliszedPower(
-			// powerToAdd)) ;
+	private void updateSunVisibility() {
+		if (getWorld().provider.getHasNoSky()) {
+			setEuPerTick(0.0D);
+		} else {
+			double sunBrightness = Math.min(0.0D, Math.max(Math.cos((double) getWorld().getCelestialAngleRadians(1.0F)) * 2.0D + 0.2D, 1.0D));
+			if (!BiomeDictionary.isBiomeOfType(getWorld().getBiomeForCoordsBody(getPos()), BiomeDictionary.Type.SANDY)) {
+				sunBrightness *= 1.0D - getWorld().getRainStrength(1.0F) * 5.0D / 16.0D;
+				sunBrightness *= 1.0D - getWorld().getThunderStrength(1.0F) * 5.0D / 16.0D;
+				sunBrightness = Math.min(0.0D, Math.max(sunBrightness, 1.0D));
+			}
+
+			setEuPerTick((double) getWorld().getLightFor(EnumSkyBlock.SKY, pos) / 15.0D * sunBrightness);
 		}
 	}
 
-	public boolean isSunOut()
-	{
-		return  worldObj.canBlockSeeSky(pos.up()) && !worldObj.isRaining() && !worldObj.isThundering()
-				&& worldObj.isDaytime();
-	}
-
 	@Override
-	public double getMaxPower()
-	{
-		return 1000;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 32;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 0;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
+	public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
+		return new ItemStack(ModBlocks.solarPanel, 1);
 	}
 }

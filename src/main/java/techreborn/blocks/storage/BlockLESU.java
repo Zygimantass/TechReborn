@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import techreborn.client.GuiHandler;
 import techreborn.init.ModBlocks;
-import techreborn.tiles.lesu.TileLesu;
+import techreborn.tiles.lesu.TileLESU;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class  BlockLESU extends BlockEnergyStorage
 	@Override
 	public TileEntity createNewTileEntity(World world, int p_149915_2_)
 	{
-		return new TileLesu();
+		return new TileLESU();
 	}
 
 	@Override public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)

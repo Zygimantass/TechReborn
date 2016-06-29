@@ -42,10 +42,10 @@ public class GuiDigitalChest extends GuiContainer
 		this.fontRendererObj.drawString(I18n.translateToLocalFormatted("container.inventory", new Object[0]), 8,
 				this.ySize - 96 + 2, 4210752);
 		this.fontRendererObj.drawString("Amount", 10, 20, 16448255);
-		if (tile.storedItem != null && tile.getStackInSlot(1) != null)
-			this.fontRendererObj.drawString(tile.storedItem.stackSize + tile.getStackInSlot(1).stackSize + "", 10, 30,
+		if (tile.storedItem != null && tile.getInventory().getStackInSlot(1) != null)
+			this.fontRendererObj.drawString(tile.storedItem.stackSize + tile.getInventory().getStackInSlot(1).stackSize + "", 10, 30,
 					16448255);
-		if (tile.storedItem == null && tile.getStackInSlot(1) != null)
-			this.fontRendererObj.drawString(tile.getStackInSlot(1).stackSize + "", 10, 30, 16448255);
+		if (tile.storedItem == null && tile.getInventory().getStackInSlot(1) != null)
+			this.fontRendererObj.drawString(tile.getInventory().getStackInSlot(1).stackSize + "", 10, 30, 16448255);
 	}
 }

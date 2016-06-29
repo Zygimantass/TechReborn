@@ -2,14 +2,11 @@ package techreborn.client.container.energy.tier3;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import reborncore.client.gui.slots.BaseSlot;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import reborncore.client.gui.slots.SlotInput;
 import reborncore.client.gui.slots.SlotOutput;
-import reborncore.common.container.RebornContainer;
 import techreborn.client.container.base.ContainerBase;
-import techreborn.client.container.base.ContainerUpgradeable;
 import techreborn.tiles.fusionReactor.TileEntityFusionController;
 
 public class ContainerFusionReactor extends ContainerBase {
@@ -19,7 +16,7 @@ public class ContainerFusionReactor extends ContainerBase {
 	public int finalTickTime;
 	public int neededEU;
 
-	TileEntityFusionController tileEntityFusionController;
+	private TileEntityFusionController tileEntityFusionController;
 
 	public ContainerFusionReactor(TileEntityFusionController tileEntity, EntityPlayer player) {
 		super(tileEntity, player);

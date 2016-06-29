@@ -36,7 +36,7 @@ public class GuiExtractor extends GuiContainer
 
 		int j = 0;
 
-		j = extractor.getProgressScaled(24);
+//		j = extractor.getProgressScaled(24);
 		if (j > 0)
 		{
 			this.drawTexturedModalRect(k + 78, l + 35, 176, 14, j + 1, 16);

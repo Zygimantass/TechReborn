@@ -1,10 +1,7 @@
 package techreborn.tiles.energy.storage;
 
-import reborncore.api.IListInfoProvider;
 import reborncore.api.power.EnumPowerTier;
 import techreborn.init.ModBlocks;
-
-import java.util.List;
 
 /**
  * Created by modmuss50 on 14/03/2016.
@@ -12,6 +9,6 @@ import java.util.List;
 public class TileBatBox extends TileEnergyStorage {
 
 	public TileBatBox() {
-		super("BatBox", ModBlocks.batBox, EnumPowerTier.LOW, 32, 32, 40000);
+		super("BatBox", ModBlocks.batBox, EnumPowerTier.LOW, 40000);
 	}
 }

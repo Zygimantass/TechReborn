@@ -37,13 +37,13 @@ public class GuiIronFurnace extends GuiContainer
 
 		int j = 0;
 
-		j = furnace.gaugeProgressScaled(24);
+//		j = furnace.gaugeProgressScaled(24);
 		if (j > 0)
 		{
 			this.drawTexturedModalRect(k + 78, l + 35, 176, 14, j + 1, 16);
 		}
 
-		j = furnace.gaugeFuelScaled(12);
+//		j = furnace.gaugeFuelScaled(12);
 		if (j > 0)
 		{
 			this.drawTexturedModalRect(k + 57, l + 36 + 12 - j, 176, 12 - j, 14, j + 2);

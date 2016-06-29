@@ -5,13 +5,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import reborncore.common.util.Inventory;
 import techreborn.config.ConfigTechReborn;
 import techreborn.init.ModBlocks;
 
-public class TileAESU extends TileEnergyStorage
-{
+public class TileAESU extends TileEnergyStorage {
 
 	public static final int MAX_OUTPUT = ConfigTechReborn.AesuMaxOutput;
 	public static final int MAX_STORAGE = ConfigTechReborn.AesuMaxStorage;
@@ -20,9 +17,8 @@ public class TileAESU extends TileEnergyStorage
 	private double euChange;
 	private int ticks;
 
-	public TileAESU()
-	{
-		super(5);
+	public TileAESU() {
+		super("AESU", ModBlocks.Aesu, EnumPowerTier.MEDIUM, MAX_STORAGE);
 	}
 
 	@Override
@@ -123,7 +119,6 @@ public class TileAESU extends TileEnergyStorage
 	{
 		NBTTagCompound tileEntity = new NBTTagCompound();
 		ItemStack dropStack = new ItemStack(ModBlocks.Aesu, 1);
-		writeToNBTWithoutCoords(tileEntity);
 		dropStack.setTagCompound(new NBTTagCompound());
 		dropStack.getTagCompound().setTag("tileEntity", tileEntity);
 		return dropStack;
@@ -135,7 +130,6 @@ public class TileAESU extends TileEnergyStorage
 		tagCompound.setDouble("euChange", euChange);
 		tagCompound.setDouble("euLastTick", euLastTick);
 		tagCompound.setInteger("output", OUTPUT);
-		inventory.writeToNBT(tagCompound);
 		return tagCompound;
 	}
 
@@ -145,42 +139,5 @@ public class TileAESU extends TileEnergyStorage
 		this.euChange = nbttagcompound.getDouble("euChange");
 		this.euLastTick = nbttagcompound.getDouble("euLastTick");
 		this.OUTPUT = nbttagcompound.getInteger("output");
-		inventory.readFromNBT(nbttagcompound);
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return TileAesu.MAX_STORAGE;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return getFacingEnum() != direction;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return getFacingEnum() == direction;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return OUTPUT;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 4096 * 2;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.EXTREME;
 	}
 }

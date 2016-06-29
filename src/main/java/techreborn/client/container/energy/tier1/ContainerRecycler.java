@@ -3,10 +3,10 @@ package techreborn.client.container.energy.tier1;
 import net.minecraft.entity.player.EntityPlayer;
 import reborncore.client.gui.slots.BaseSlot;
 import reborncore.client.gui.slots.SlotOutput;
-import techreborn.client.container.base.ContainerUpgradeable;
+import techreborn.client.container.base.ContainerBase;
 import techreborn.tiles.energy.tier1.TileRecycler;
 
-public class ContainerRecycler extends ContainerUpgradeable {
+public class ContainerRecycler extends ContainerBase {
 
 	public ContainerRecycler(TileRecycler tileEntity, EntityPlayer player) {
 		super(tileEntity, player);

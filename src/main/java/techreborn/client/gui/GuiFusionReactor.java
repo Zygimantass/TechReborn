@@ -1,7 +1,5 @@
 package techreborn.client.gui;
 
-import java.io.IOException;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,6 +9,8 @@ import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
 import techreborn.client.container.energy.tier3.ContainerFusionReactor;
 import techreborn.tiles.fusionReactor.TileEntityFusionController;
+
+import java.io.IOException;
 
 public class GuiFusionReactor extends GuiContainer
 {
@@ -35,12 +35,12 @@ public class GuiFusionReactor extends GuiContainer
 		this.fontRendererObj.drawString(I18n.translateToLocalFormatted("container.inventory", new Object[0]), 8,
 				this.ySize - 96 + 2, 4210752);
 
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerFusionReactor.energy), 11, 8, 16448255);
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerFusionReactor.getEnergy()), 11, 8, 16448255);
 		this.fontRendererObj.drawString("Coils: " + (containerFusionReactor.coilStatus == 1 ? "Yes" : "No"), 11, 16,
 				16448255);
 		if (containerFusionReactor.neededEU > 1 && containerFusionReactor.tickTime < 1)
 			this.fontRendererObj.drawString(
-					"Start: " + percentage(containerFusionReactor.neededEU, containerFusionReactor.energy) + "%", 11,
+					"Start: " + percentage(containerFusionReactor.neededEU, containerFusionReactor.getEnergy()) + "%", 11,
 					24, 16448255);
 
 	}

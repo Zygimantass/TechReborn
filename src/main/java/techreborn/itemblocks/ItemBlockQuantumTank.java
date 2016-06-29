@@ -35,7 +35,7 @@ public class ItemBlockQuantumTank extends ItemBlock
 		if (stack != null && stack.hasTagCompound())
 		{
 			((TileQuantumTank) world.getTileEntity(pos))
-					.readFromNBTWithoutCoords(stack.getTagCompound().getCompoundTag("tileEntity"));
+					.readFromNBT(stack.getTagCompound().getCompoundTag("tileEntity"));
 		}
 		return true;
 	}

@@ -87,7 +87,7 @@ public class GuiIDSU extends GuiContainer
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerIDSU.euOut) + "/tick", 10, 22,
 				Color.WHITE.getRGB());
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerIDSU.storedEu), 10, 32,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(idsu.getEnergy()), 10, 32,
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerIDSU.euChange) + "  change", 10, 42,
 				Color.WHITE.getRGB());

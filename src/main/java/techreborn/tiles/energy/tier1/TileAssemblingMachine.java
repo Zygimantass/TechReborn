@@ -1,70 +1,57 @@
 package techreborn.tiles.energy.tier1;
 
-import reborncore.common.IWrenchable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.recipe.IRecipeCrafterProvider;
-import reborncore.api.tile.IContainerProvider;
-import reborncore.api.tile.IInventoryProvider;
 import reborncore.common.container.RebornContainer;
-import reborncore.common.powerSystem.TilePowerAcceptor;
 import reborncore.common.recipes.RecipeCrafter;
-import reborncore.common.util.Inventory;
+import reborncore.common.tile.TileMachineInventory;
 import techreborn.api.Reference;
 import techreborn.client.container.energy.tier1.ContainerAssemblingMachine;
 import techreborn.init.ModBlocks;
 
-public class TileAssemblingMachine extends TilePowerAcceptor implements IWrenchable, ISidedInventory,IInventoryProvider, IRecipeCrafterProvider, IContainerProvider
-{
+public class TileAssemblingMachine extends TileMachineInventory implements IRecipeCrafterProvider {
 
-	public int tickTime;
-	public Inventory inventory = new Inventory(8, "TileAssemblingMachine", 64, this);
 	public RecipeCrafter crafter;
 
 	public TileAssemblingMachine()
 	{
-		super(2);
+		super(EnumPowerTier.MEDIUM, 10000, 0, 1, "TileAssemblingMachine", 8, 64);
+
 		// Input slots
 		int[] inputs = new int[2];
 		inputs[0] = 0;
 		inputs[1] = 1;
 		int[] outputs = new int[1];
 		outputs[0] = 2;
-		crafter = new RecipeCrafter(Reference.assemblingMachineRecipe, this, 2, 2, inventory, inputs, outputs);
+		crafter = new RecipeCrafter(Reference.assemblingMachineRecipe, this, 2, 2, getInventory(), inputs, outputs);
+	}
+
+	@Override
+	public void machineResetProgress() {
+		super.machineResetProgress();
+	}
+
+	@Override
+	public void machineTick() {
+		if(!this.crafter.machineTick())
+			return;
+
+		super.machineTick();
+	}
+
+	@Override
+	public void machineFinish() {
+		this.crafter.machineFinish();
 	}
 
 	@Override
 	public void updateEntity()
 	{
-		super.updateEntity();
-		charge(3);
-	}
-
-	@Override
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, EnumFacing side)
-	{
-		return false;
-	}
-
-	@Override
-	public EnumFacing getFacing()
-	{
-		return getFacingEnum();
-	}
-
-	@Override
-	public boolean wrenchCanRemove(EntityPlayer entityPlayer)
-	{
-		return entityPlayer.isSneaking();
-	}
-
-	@Override
-	public float getWrenchDropRate()
-	{
-		return 1.0F;
+		//super.updateEntity();
+		//charge(3);
+		//this.crafter.updateEntity();
 	}
 
 	@Override
@@ -73,32 +60,26 @@ public class TileAssemblingMachine extends TilePowerAcceptor implements IWrencha
 		return new ItemStack(ModBlocks.AssemblyMachine, 1);
 	}
 
-	public boolean isComplete()
-	{
-		return false;
-	}
-
-
-	// ISidedInventory
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2 } : new int[] { 0, 1, 2 };
-	}
-
-	@Override
-	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		if (slotIndex == 2)
-			return false;
-		return isItemValidForSlot(slotIndex, itemStack);
-	}
-
-	@Override
-	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		return slotIndex == 2;
-	}
+//	// ISidedInventory
+//	@Override
+//	public int[] getSlotsForFace(EnumFacing side)
+//	{
+//		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2 } : new int[] { 0, 1, 2 };
+//	}
+//
+//	@Override
+//	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		if (slotIndex == 2)
+//			return false;
+//		return isItemValidForSlot(slotIndex, itemStack);
+//	}
+//
+//	@Override
+//	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		return slotIndex == 2;
+//	}
 
 	// @Override
 	// public void addWailaInfo(List<String> info)
@@ -120,49 +101,13 @@ public class TileAssemblingMachine extends TilePowerAcceptor implements IWrencha
 	}
 
 	@Override
-	public double getMaxPower()
-	{
-		return 10000;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return false;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 128;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
-	}
-
-	@Override
-	public Inventory getInventory() {
-		return inventory;
+	public void updateInventory() {
+		this.crafter.updateInventory();
 	}
 
 	@Override
 	public RecipeCrafter getRecipeCrafter() {
-		return crafter;
+		return this.crafter;
 	}
 
 	@Override

@@ -3,15 +3,15 @@ package techreborn.client.container.energy.tier1;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
-import reborncore.client.gui.slots.BaseSlot;
 import net.minecraft.item.ItemStack;
-import reborncore.client.gui.slots.SlotDischargeItem;
+import reborncore.client.gui.slots.BaseSlot;
+import reborncore.client.gui.slots.SlotCharge;
 import reborncore.client.gui.slots.SlotOutput;
 import techreborn.api.RollingMachineRecipe;
-import techreborn.client.container.base.ContainerUpgradeable;
+import techreborn.client.container.base.ContainerBase;
 import techreborn.tiles.energy.tier1.TileRollingMachine;
 
-public class ContainerRollingMachine extends ContainerUpgradeable {
+public class ContainerRollingMachine extends ContainerBase {
 
 	private int currentItemBurnTime;
 	private int burnTime;
@@ -33,7 +33,8 @@ public class ContainerRollingMachine extends ContainerUpgradeable {
 		addSlotToContainer(new SlotOutput(tileEntity.getInventory(), getNextSlotIndex(), 124, 35));
 
 		// battery
-		addSlotToContainer(new SlotDischargeItem(tileEntity.getInventory(), getNextSlotIndex(), 8, 51));
+//		addSlotToContainer(new SlotDischargeItem(tileEntity.getInventory(), getNextSlotIndex(), 8, 51));
+		addSlotToContainer(new SlotCharge(tileEntity.getInventory(), getNextSlotIndex(), 8, 51));
 	}
 
 	@Override

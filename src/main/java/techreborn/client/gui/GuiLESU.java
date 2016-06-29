@@ -1,7 +1,5 @@
 package techreborn.client.gui;
 
-import java.awt.*;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,18 +7,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
 import techreborn.client.container.energy.storage.ContainerLESU;
-import techreborn.tiles.lesu.TileLesu;
+import techreborn.tiles.lesu.TileLESU;
+
+import java.awt.*;
 
 public class GuiLESU extends GuiContainer
 {
 
 	private static final ResourceLocation texture = new ResourceLocation("techreborn", "textures/gui/aesu.png");
 
-	TileLesu aesu;
+	TileLESU aesu;
 
 	ContainerLESU containerLesu;
 
-	public GuiLESU(EntityPlayer player, TileLesu tileaesu)
+	public GuiLESU(EntityPlayer player, TileLESU tileaesu)
 	{
 		super(new ContainerLESU(tileaesu, player));
 		this.xSize = 176;
@@ -45,7 +45,7 @@ public class GuiLESU extends GuiContainer
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerLesu.euOut) + "/t", 10, 20,
 				Color.WHITE.getRGB());
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerLesu.storedEu), 10, 30,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerLesu.getEnergy()), 10, 30,
 				Color.WHITE.getRGB());
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerLesu.euChange) + " change", 10, 40,
 				Color.WHITE.getRGB());

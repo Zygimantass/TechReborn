@@ -2,14 +2,11 @@ package techreborn.tiles.energy.tier1;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.recipe.IRecipeCrafterProvider;
 import reborncore.common.container.RebornContainer;
-import reborncore.common.powerSystem.TilePowerAcceptor;
 import reborncore.common.recipes.RecipeCrafter;
 import reborncore.common.tile.TileMachineInventory;
-import reborncore.common.util.Inventory;
 import techreborn.api.Reference;
 import techreborn.client.container.energy.tier1.ContainerCompressor;
 import techreborn.init.ModBlocks;
@@ -29,27 +26,22 @@ public class TileCompressor extends TileMachineInventory implements IRecipeCraft
 	}
 
 	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		crafter.machineTick();
-		//charge(3);
+	public void machineTick() {
+		if(!this.crafter.machineTick())
+			return;
+
+		super.machineTick();
 	}
 
 	@Override
 	public void machineFinish() {
-
+		this.crafter.machineFinish();
 	}
 
 	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer)
 	{
 		return new ItemStack(ModBlocks.Compressor, 1);
-	}
-
-	public boolean isComplete()
-	{
-		return false;
 	}
 
 //	// ISidedInventory
@@ -83,32 +75,13 @@ public class TileCompressor extends TileMachineInventory implements IRecipeCraft
 	}
 
 	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return false;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 32;
+	public void updateInventory() {
+		this.crafter.updateInventory();
 	}
 
 	@Override
 	public RecipeCrafter getRecipeCrafter() {
-		return crafter;
+		return this.crafter;
 	}
 
 	@Override

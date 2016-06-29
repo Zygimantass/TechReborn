@@ -1,152 +1,68 @@
 package techreborn.tiles.energy.generator;
 
-import reborncore.common.IWrenchable;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
+import reborncore.api.tile.IContainerProvider;
 import reborncore.api.tile.IInventoryProvider;
-import reborncore.common.blocks.BlockMachineBase;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import reborncore.common.util.Inventory;
+import reborncore.common.container.RebornContainer;
+import reborncore.common.util.inventory.Inventory;
+import techreborn.client.container.energy.generator.ContainerGenerator;
 import techreborn.init.ModBlocks;
 
-public class TileGenerator extends TilePowerAcceptor implements IWrenchable,IInventoryProvider
-{
-	public static int outputAmount = 10; // This is in line with BC engines rf,
-	public Inventory inventory = new Inventory(2, "TileGenerator", 64, this);
-	public int fuelSlot = 0;
-	public int burnTime;
-	public int totalBurnTime = 0;
-											// sould properly use the conversion
-											// ratio here.
-	public boolean isBurning;
-	public boolean lastTickBurning;
-	ItemStack burnItem;
+public class TileGenerator extends AbstractTileGenerator implements IInventoryProvider, IContainerProvider {
 
-	public TileGenerator()
-	{
-		super(1);
+	private Inventory inventory = new Inventory("TileGenerator", 2, 64, this);
+	private int fuelSlot = 0;
+
+	private int burnTime;
+	private int currentItemBurnTime;
+
+	private ItemStack burnItem;
+
+	public TileGenerator() {
+		super(EnumPowerTier.LOW, 4000);
 	}
 
-	public static int getItemBurnTime(ItemStack stack)
-	{
+    public int getScaledBurnTime(int i) {
+        return (int) (((float) this.burnTime / (float) this.currentItemBurnTime) * i);
+    }
+
+	private static int getItemBurnTime(ItemStack stack) {
 		return TileEntityFurnace.getItemBurnTime(stack) / 4;
 	}
 
 	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		if (worldObj.isRemote)
-		{
-			return;
-		}
-		if (getEnergy() < getMaxPower())
-		{
-			if (burnTime > 0)
-			{
-				burnTime--;
-				addEnergy(outputAmount);
-				isBurning = true;
-			}
-		} else
-		{
-			isBurning = false;
-		}
+	public void updateTick() {
+		super.updateTick();
 
-		if (burnTime == 0)
-		{
-			updateState();
-			burnTime = totalBurnTime = getItemBurnTime(getStackInSlot(fuelSlot));
-			if (burnTime > 0)
-			{
-				updateState();
-				burnItem = getStackInSlot(fuelSlot);
-				if (getStackInSlot(fuelSlot).stackSize == 1)
-				{
-					setInventorySlotContents(fuelSlot, null);
-				} else
-				{
-					decrStackSize(fuelSlot, 1);
-				}
-			}
-		}
+        int euPerTick = 0;
+        if(this.burnTime-- > 0) {
+            euPerTick = 10;
+        }
+        else {
+            this.burnItem = getInventory().getStackInSlot(this.fuelSlot);
+            if(this.burnItem != null) {
+                this.burnTime = this.currentItemBurnTime = getItemBurnTime(this.burnItem);
+                if(this.burnTime > 0) {
+                    if(this.burnItem.stackSize == 1) {
+                        getInventory().setInventorySlotContents(this.fuelSlot, null);
+                    }
+                    else {
+                        getInventory().decrStackSize(this.fuelSlot, 1);
+                    }
+                }
 
-		lastTickBurning = isBurning;
-	}
+                euPerTick = 10;
+            }
+        }
 
-	public void updateState()
-	{
-		IBlockState BlockStateContainer = worldObj.getBlockState(pos);
-		if (BlockStateContainer.getBlock() instanceof BlockMachineBase)
-		{
-			BlockMachineBase blockMachineBase = (BlockMachineBase) BlockStateContainer.getBlock();
-			if (BlockStateContainer.getValue(BlockMachineBase.ACTIVE) != burnTime > 0)
-				blockMachineBase.setActive(burnTime > 0, worldObj, pos);
-		}
+        setEuPerTick(euPerTick);
 	}
 
 	@Override
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, EnumFacing side)
-	{
-		return false;
-	}
-
-	@Override
-	public EnumFacing getFacing()
-	{
-		return getFacingEnum();
-	}
-
-	@Override
-	public boolean wrenchCanRemove(EntityPlayer entityPlayer)
-	{
-		return entityPlayer.isSneaking();
-	}
-
-	@Override
-	public float getWrenchDropRate()
-	{
-		return 1.0F;
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return 100;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 64;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 0;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
+	public void updateRequirements() {
 	}
 
 	@Override
@@ -157,6 +73,11 @@ public class TileGenerator extends TilePowerAcceptor implements IWrenchable,IInv
 
 	@Override
 	public Inventory getInventory() {
-		return inventory;
+		return this.inventory;
+	}
+
+	@Override
+	public RebornContainer getContainer() {
+		return RebornContainer.getContainerFromClass(ContainerGenerator.class, this);
 	}
 }

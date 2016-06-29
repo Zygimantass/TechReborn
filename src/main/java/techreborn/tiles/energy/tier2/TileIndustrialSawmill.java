@@ -1,46 +1,36 @@
 package techreborn.tiles.energy.tier2;
 
-import reborncore.common.IWrenchable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.*;
-import reborncore.api.IListInfoProvider;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.recipe.IRecipeCrafterProvider;
-import reborncore.api.tile.IInventoryProvider;
+import reborncore.common.container.RebornContainer;
 import reborncore.common.misc.Location;
-import reborncore.common.powerSystem.TilePowerAcceptor;
 import reborncore.common.recipes.RecipeCrafter;
-import reborncore.common.util.FluidUtils;
-import reborncore.common.util.Inventory;
-import reborncore.common.util.Tank;
+import reborncore.common.tile.TileMachineInventory;
 import techreborn.api.Reference;
 import techreborn.api.recipe.ITileRecipeHandler;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
 import techreborn.blocks.BlockMachineCasing;
+import techreborn.client.container.energy.tier2.ContainerIndustrialSawmill;
 import techreborn.init.ModBlocks;
 import techreborn.init.ModFluids;
 import techreborn.tiles.TileMachineCasing;
 
-public class TileIndustrialSawmill extends TilePowerAcceptor
-		implements IWrenchable, IFluidHandler,IInventoryProvider, ISidedInventory, IListInfoProvider, ITileRecipeHandler<IndustrialSawmillRecipe>, IRecipeCrafterProvider
-{
-	public static final int TANK_CAPACITY = 16000;
+public class TileIndustrialSawmill extends TileMachineInventory implements IFluidHandler, ITileRecipeHandler<IndustrialSawmillRecipe>, IRecipeCrafterProvider {
 
-	public int tickTime;
-	public Inventory inventory = new Inventory(5, "TileIndustrialSawmill", 64, this);
-	public Tank tank = new Tank("TileSawmill", TANK_CAPACITY, this);
+	public FluidTank tank = new FluidTank(16000);
 	public RecipeCrafter crafter;
 
 	public TileIndustrialSawmill()
 	{
-		super(2);
-		// TODO configs
+		super(EnumPowerTier.MEDIUM, 10000, 0, 1, "TileIndustrialSawmill", 5, 64);
+
 		// Input slots
 		int[] inputs = new int[2];
 		inputs[0] = 0;
@@ -49,22 +39,33 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 		outputs[0] = 2;
 		outputs[1] = 3;
 		outputs[2] = 4;
-		crafter = new RecipeCrafter(Reference.industrialSawmillRecipe, this, 2, 3, inventory, inputs, outputs);
+		crafter = new RecipeCrafter(Reference.industrialSawmillRecipe, this, 2, 3, getInventory(), inputs, outputs);
 	}
 
 	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		if (getMutliBlock())
-		{
-			crafter.updateEntity();
-		}
-		FluidUtils.drainContainers(this, inventory, 0, 4);
-		FluidUtils.drainContainers(this, inventory, 1, 4);
+	public boolean canWork() {
+		return super.canWork() && getMultiBlock();
 	}
 
-	public boolean getMutliBlock()
+	@Override
+	public void machineTick() {
+		if(!this.crafter.machineTick())
+			return;
+
+		super.machineTick();
+	}
+
+	@Override
+	public void machineFinish() {
+		this.crafter.machineFinish();
+	}
+
+	@Override
+	public void updateInventory() {
+		this.crafter.updateInventory();
+	}
+
+	public boolean getMultiBlock()
 	{
 		for (EnumFacing direction : EnumFacing.values())
 		{
@@ -93,38 +94,9 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	}
 
 	@Override
-	public boolean wrenchCanSetFacing(EntityPlayer entityPlayer, EnumFacing side)
-	{
-		return false;
-	}
-
-	@Override
-	public EnumFacing getFacing()
-	{
-		return getFacingEnum();
-	}
-
-	@Override
-	public boolean wrenchCanRemove(EntityPlayer entityPlayer)
-	{
-		return entityPlayer.isSneaking();
-	}
-
-	@Override
-	public float getWrenchDropRate()
-	{
-		return 1.0F;
-	}
-
-	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer)
 	{
 		return new ItemStack(ModBlocks.industrialSawmill, 1);
-	}
-
-	public boolean isComplete()
-	{
-		return false;
 	}
 
 	@Override
@@ -132,7 +104,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	{
 		super.readFromNBT(tagCompound);
 		tank.readFromNBT(tagCompound);
-		crafter.readFromNBT(tagCompound);
 	}
 
 	@Override
@@ -140,7 +111,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	{
 		super.writeToNBT(tagCompound);
 		tank.writeToNBT(tagCompound);
-		crafter.writeToNBT(tagCompound);
 		return tagCompound;
 	}
 
@@ -152,7 +122,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 				|| resource.getFluid() == ModFluids.fluidSodiumpersulfate)
 		{
 			int filled = tank.fill(resource, doFill);
-			tank.compareAndUpdate();
 			return filled;
 		}
 		return 0;
@@ -166,7 +135,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 			return null;
 		}
 		FluidStack fluidStack = tank.drain(resource.amount, doDrain);
-		tank.compareAndUpdate();
 		return fluidStack;
 	}
 
@@ -174,7 +142,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
 	{
 		FluidStack drained = tank.drain(maxDrain, doDrain);
-		tank.compareAndUpdate();
 		return drained;
 	}
 
@@ -197,25 +164,25 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	}
 
 	// ISidedInventory
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2, 3, 4 } : new int[] { 0, 1, 2, 3, 4 };
-	}
-
-	@Override
-	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		if (slotIndex >= 2)
-			return false;
-		return isItemValidForSlot(slotIndex, itemStack);
-	}
-
-	@Override
-	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
-	{
-		return slotIndex == 2 || slotIndex == 3 || slotIndex == 4;
-	}
+//	@Override
+//	public int[] getSlotsForFace(EnumFacing side)
+//	{
+//		return side == EnumFacing.DOWN ? new int[] { 0, 1, 2, 3, 4 } : new int[] { 0, 1, 2, 3, 4 };
+//	}
+//
+//	@Override
+//	public boolean canInsertItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		if (slotIndex >= 2)
+//			return false;
+//		return isItemValidForSlot(slotIndex, itemStack);
+//	}
+//
+//	@Override
+//	public boolean canExtractItem(int slotIndex, ItemStack itemStack, EnumFacing side)
+//	{
+//		return slotIndex == 2 || slotIndex == 3 || slotIndex == 4;
+//	}
 
 	public int getProgressScaled(int scale)
 	{
@@ -224,42 +191,6 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 			return crafter.currentTickTime * scale / crafter.currentNeededTicks;
 		}
 		return 0;
-	}
-
-	@Override
-	public double getMaxPower()
-	{
-		return 10000;
-	}
-
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return false;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 64;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
 	}
 
 	@Override
@@ -307,12 +238,12 @@ public class TileIndustrialSawmill extends TilePowerAcceptor
 	}
 
 	@Override
-	public Inventory getInventory() {
-		return inventory;
+	public RecipeCrafter getRecipeCrafter() {
+		return crafter;
 	}
 
 	@Override
-	public RecipeCrafter getRecipeCrafter() {
-		return crafter;
+	public RebornContainer getContainer() {
+		return RebornContainer.getContainerFromClass(ContainerIndustrialSawmill.class, this);
 	}
 }

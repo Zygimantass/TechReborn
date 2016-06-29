@@ -28,7 +28,7 @@ public class TileExtractor extends TileMachineInventory implements IRecipeCrafte
 
 	@Override
 	public void machineTick() {
-		if(!crafter.machineTick())
+		if(!this.crafter.machineTick())
 			return;
 
 		super.machineTick();
@@ -36,16 +36,12 @@ public class TileExtractor extends TileMachineInventory implements IRecipeCrafte
 
 	@Override
 	public void machineFinish() {
-		crafter.machineFinish();
+		this.crafter.machineFinish();
 	}
 
 	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
 		return new ItemStack(ModBlocks.Extractor, 1);
-	}
-
-	public boolean isComplete() {
-		return false;
 	}
 
 //	// ISidedInventory
@@ -65,27 +61,17 @@ public class TileExtractor extends TileMachineInventory implements IRecipeCrafte
 //	}
 
 	@Override
-	public double getMaxOutput() {
-		return 0;
-	}
-
-	@Override
-	public double getMaxInput() {
-		return 32;
-	}
-
-	@Override
-	public RecipeCrafter getRecipeCrafter() {
-		return crafter;
-	}
-
-	@Override
 	public void updateInventory() {
-		crafter.updateInventory();
+		this.crafter.updateInventory();
 	}
 
 	@Override
 	public RebornContainer getContainer() {
 		return RebornContainer.getContainerFromClass(ContainerExtractor.class, this);
+	}
+
+	@Override
+	public RecipeCrafter getRecipeCrafter() {
+		return this.crafter;
 	}
 }

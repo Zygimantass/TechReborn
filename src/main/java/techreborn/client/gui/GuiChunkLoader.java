@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import techreborn.client.container.energy.tier3.ContainerChunkloader;
+import techreborn.client.container.energy.tier3.ContainerChunkLoader;
 import techreborn.tiles.energy.tier3.TileChunkLoader;
 
 public class GuiChunkLoader extends GuiContainer
@@ -22,7 +22,7 @@ public class GuiChunkLoader extends GuiContainer
 
 	public GuiChunkLoader(EntityPlayer player, TileChunkLoader tilechunkloader)
 	{
-		super(new ContainerChunkloader(tilechunkloader, player));
+		super(new ContainerChunkLoader(tilechunkloader, player));
 		this.xSize = 176;
 		this.ySize = 167;
 		chunkloader = tilechunkloader;

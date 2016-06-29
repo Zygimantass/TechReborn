@@ -12,10 +12,10 @@ import reborncore.client.multiblock.Multiblock;
 import reborncore.client.multiblock.MultiblockSet;
 import reborncore.common.misc.Location;
 import reborncore.common.multiblock.CoordTriplet;
-import techreborn.client.container.energy.tier2.ContainerBlastFurnace;
+import techreborn.client.container.energy.tier2.ContainerIndustrialBlastFurnace;
 import techreborn.init.ModBlocks;
 import techreborn.proxies.ClientProxy;
-import techreborn.tiles.energy.tier2.TileBlastFurnace;
+import techreborn.tiles.energy.tier2.TileIndustrialBlastFurnace;
 
 import java.io.IOException;
 
@@ -25,17 +25,17 @@ public class GuiBlastFurnace extends GuiContainer
 	public static final ResourceLocation texture = new ResourceLocation("techreborn",
 			"textures/gui/industrial_blast_furnace.png");
 
-	TileBlastFurnace blastfurnace;
+	TileIndustrialBlastFurnace blastfurnace;
 
-	ContainerBlastFurnace containerBlastFurnace;
+	ContainerIndustrialBlastFurnace containerBlastFurnace;
 	boolean hasMultiBlock;
-	public GuiBlastFurnace(EntityPlayer player, TileBlastFurnace tileblastfurnace)
+	public GuiBlastFurnace(EntityPlayer player, TileIndustrialBlastFurnace tileblastfurnace)
 	{
-		super(new ContainerBlastFurnace(tileblastfurnace, player));
+		super(new ContainerIndustrialBlastFurnace(tileblastfurnace, player));
 		this.xSize = 176;
 		this.ySize = 167;
 		blastfurnace = tileblastfurnace;
-		this.containerBlastFurnace = (ContainerBlastFurnace) this.inventorySlots;
+		this.containerBlastFurnace = (ContainerIndustrialBlastFurnace) this.inventorySlots;
 	}
 
 	@Override
@@ -49,9 +49,9 @@ public class GuiBlastFurnace extends GuiContainer
 		buttonList.add(button);
 		super.initGui();
 		CoordTriplet coordinates = new CoordTriplet(
-				blastfurnace.getPos().getX() - (EnumFacing.getFront(blastfurnace.getFacingInt()).getFrontOffsetX() * 2),
+				blastfurnace.getPos().getX() - (EnumFacing.getFront(blastfurnace.getFacing().getIndex()).getFrontOffsetX() * 2),
 				blastfurnace.getPos().getY() - 1, blastfurnace.getPos().getZ()
-						- (EnumFacing.getFront(blastfurnace.getFacingInt()).getFrontOffsetZ() * 2));
+						- (EnumFacing.getFront(blastfurnace.getFacing().getIndex()).getFrontOffsetZ() * 2));
 		if (coordinates.equals(ClientProxy.multiblockRenderEvent.anchor) && blastfurnace.getHeat() != 0)
 		{
 			ClientProxy.multiblockRenderEvent.setMultiblock(null);
@@ -163,9 +163,9 @@ public class GuiBlastFurnace extends GuiContainer
 							blastfurnace.getPos().getY(), blastfurnace.getPos().getZ(), blastfurnace.getWorld());
 					ClientProxy.multiblockRenderEvent.anchor = new CoordTriplet(
 							blastfurnace.getPos().getX()
-									- (EnumFacing.getFront(blastfurnace.getFacingInt()).getFrontOffsetX() * 2),
+									- (EnumFacing.getFront(blastfurnace.getFacing().getIndex()).getFrontOffsetX() * 2),
 							blastfurnace.getPos().getY() - 1, blastfurnace.getPos().getZ()
-									- (EnumFacing.getFront(blastfurnace.getFacingInt()).getFrontOffsetZ() * 2));
+									- (EnumFacing.getFront(blastfurnace.getFacing().getIndex()).getFrontOffsetZ() * 2));
 				}
 				button.displayString = "A";
 			} else

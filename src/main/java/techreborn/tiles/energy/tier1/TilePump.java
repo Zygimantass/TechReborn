@@ -3,6 +3,8 @@ package techreborn.tiles.energy.tier1;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -11,34 +13,40 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.*;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.common.powerSystem.PowerSystem;
-import reborncore.common.powerSystem.TilePowerAcceptor;
-import reborncore.common.util.Tank;
+import reborncore.common.tile.TileMachineBase;
 import techreborn.config.ConfigTechReborn;
+import techreborn.init.ModBlocks;
 
 import java.util.List;
 
 /**
  * Created by modmuss50 on 08/05/2016.
  */
-public class TilePump extends TilePowerAcceptor implements IFluidHandler {
+public class TilePump extends TileMachineBase implements IFluidHandler {
 
-    public Tank tank = new Tank("TilePump", 10000, this);
+    //public Tank tank = new Tank("TilePump", 10000, this);
+    private FluidTank tank = new FluidTank(10000);
 
     public TilePump() {
-        super(1);
+        super(EnumPowerTier.LOW, 10000, ConfigTechReborn.pumpExtractEU, 1);
     }
 
     @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if(!worldObj.isRemote && worldObj.getTotalWorldTime() % 10 == 0 && !tank.isFull() && tank.getCapacity() - tank.getFluidAmount() >= 1000 && canUseEnergy(ConfigTechReborn.pumpExtractEU)){
-            FluidStack fluidStack = drainBlock(worldObj, pos.down(), false);
-            if(fluidStack != null){
-                tank.fill(drainBlock(worldObj, pos.down(), true), true);
-                useEnergy(ConfigTechReborn.pumpExtractEU);
-            }
-            tank.compareAndUpdate();
+    public boolean canWork() {
+        return super.canWork() && tank.getCapacity() - tank.getFluidAmount() >= 1000 && drainBlock(getWorld(), getPos().down(), false) != null;
+    }
+
+    @Override
+    public void machineFinish() {
+        FluidStack fluidStack = drainBlock(getWorld(), getPos().down(), false);
+        if(fluidStack != null) {
+            this.tank.fill(drainBlock(getWorld(), getPos().down(), true), true);
         }
+    }
+
+    @Override
+    public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
+        return new ItemStack(ModBlocks.pump, 1);
     }
 
     @Override
@@ -50,7 +58,7 @@ public class TilePump extends TilePowerAcceptor implements IFluidHandler {
                 + "1000mb/5 sec");
     }
 
-    public static FluidStack drainBlock(World world, BlockPos pos, boolean doDrain) {
+    private FluidStack drainBlock(World world, BlockPos pos, boolean doDrain) {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
@@ -79,101 +87,47 @@ public class TilePump extends TilePowerAcceptor implements IFluidHandler {
     }
 
     @Override
-    public double getMaxPower() {
-        return 10000;
-    }
-
-    @Override
-    public boolean canAcceptEnergy(EnumFacing direction) {
-        return true;
-    }
-
-    @Override
-    public boolean canProvideEnergy(EnumFacing direction) {
-        return false;
-    }
-
-    @Override
-    public double getMaxOutput() {
-        return 0;
-    }
-
-    @Override
-    public double getMaxInput() {
-        return 32;
-    }
-
-    @Override
-    public EnumPowerTier getTier() {
-        return EnumPowerTier.LOW;
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound tagCompound)
     {
         super.readFromNBT(tagCompound);
-        readFromNBTWithoutCoords(tagCompound);
-    }
-
-    public void readFromNBTWithoutCoords(NBTTagCompound tagCompound)
-    {
-        tank.readFromNBT(tagCompound);
+        this.tank.readFromNBT(tagCompound);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
-        writeToNBTWithoutCoords(tagCompound);
-        return tagCompound;
-    }
-
-    public NBTTagCompound writeToNBTWithoutCoords(NBTTagCompound tagCompound)
-    {
-        tank.writeToNBT(tagCompound);
+        this.tank.writeToNBT(tagCompound);
         return tagCompound;
     }
 
     // IFluidHandler
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
-    {
-        int fill = tank.fill(resource, doFill);
-        tank.compareAndUpdate();
-        return fill;
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
+        return tank.fill(resource, doFill);
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
-    {
-        FluidStack drain = tank.drain(resource.amount, doDrain);
-        tank.compareAndUpdate();
-        return drain;
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
+        return tank.drain(resource.amount, doDrain);
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
-    {
-        FluidStack drain = tank.drain(maxDrain, doDrain);
-        tank.compareAndUpdate();
-        return drain;
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
+        return tank.drain(maxDrain, doDrain);
     }
 
     @Override
-    public boolean canFill(EnumFacing from, Fluid fluid)
-    {
+    public boolean canFill(EnumFacing from, Fluid fluid) {
         return false;
     }
 
     @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid)
-    {
+    public boolean canDrain(EnumFacing from, Fluid fluid) {
         return tank.getFluid() == null || tank.getFluid().getFluid() == fluid;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from)
-    {
+    public FluidTankInfo[] getTankInfo(EnumFacing from) {
         return new FluidTankInfo[] { tank.getInfo() };
     }
 }

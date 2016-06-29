@@ -55,7 +55,7 @@ public class ContainerImplosionCompressor extends ContainerCrafting {
 	}
 
 	public int getMultIBlockStateint() {
-		return tileImplosionCompressor.getMutliBlock() ? 1 : 0;
+		return tileImplosionCompressor.getMultiBlock() ? 1 : 0;
 	}
 
 }

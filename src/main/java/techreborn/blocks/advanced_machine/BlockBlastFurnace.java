@@ -9,7 +9,7 @@ import reborncore.common.blocks.IRotationTexture;
 import techreborn.Core;
 import techreborn.client.GuiHandler;
 import techreborn.client.TechRebornCreativeTab;
-import techreborn.tiles.energy.tier2.TileBlastFurnace;
+import techreborn.tiles.energy.tier2.TileIndustrialBlastFurnace;
 
 public class BlockBlastFurnace extends BlockMachineBase implements IRotationTexture
 {
@@ -26,7 +26,7 @@ public class BlockBlastFurnace extends BlockMachineBase implements IRotationText
 	@Override
 	public TileEntity createNewTileEntity(World world, int p_149915_2_)
 	{
-		return new TileBlastFurnace();
+		return new TileIndustrialBlastFurnace();
 	}
 
 	@Override

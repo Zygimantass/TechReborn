@@ -44,15 +44,16 @@ public class GuiGenerator extends GuiContainer
 
 		int j = 0;
 
-		j = generator.getEnergyScaled(24);
+		//j = generator.getEnergyScaled(24);
+		j = (int) generator.getEnergy();
 		if (j > 0)
 		{
 			this.drawTexturedModalRect(k + 109, l + 21 + 12, 176, 0, j + 1, 16);
 		}
 
-		if (containerGenerator.burnTime != 0)
+		if (generator.getScaledBurnTime(1) != 0)
 		{
-			j = containerGenerator.getScaledBurnTime(13);
+			j = generator.getScaledBurnTime(13);
 			this.drawTexturedModalRect(k + 80, l + 38 + 12 - j, 176, 30 - j, 14, j + 1);
 		}
 	}
@@ -65,7 +66,7 @@ public class GuiGenerator extends GuiContainer
 		this.fontRendererObj.drawString(I18n.translateToLocalFormatted("container.inventory", new Object[0]), 8,
 				this.ySize - 96 + 2, 4210752);
 
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerGenerator.energy), 25, this.ySize - 150,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(generator.getEnergy()), 25, this.ySize - 150,
 				4210752);
 	}
 }

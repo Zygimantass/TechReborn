@@ -112,7 +112,7 @@ public class BlockPlayerDetector extends BlockMachineBase implements ITexturedBl
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TilePlayerDectector)
 		{
-			((TilePlayerDectector) tile).owenerUdid = placer.getUniqueID().toString();
+			((TilePlayerDectector) tile).ownerUDID = placer.getUniqueID().toString();
 		}
 	}
 

@@ -71,7 +71,7 @@ public class GuiMFE extends GuiContainer
 				this.ySize - 96 + 2, 4210752);
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(generator.getMaxPower()), 110, this.ySize - 150,
 				4210752);
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerGenerator.energy), 110, this.ySize - 160,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerGenerator.getEnergy()), 110, this.ySize - 160,
 				4210752);
 	}
 }

@@ -1,15 +1,15 @@
 package techreborn.tiles.energy.storage;
 
-import net.minecraft.nbt.NBTTagCompound;
-import reborncore.common.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import reborncore.api.power.EnumPowerTier;
 import reborncore.api.power.IEnergyItemInfo;
+import reborncore.common.IWrenchable;
 import reborncore.common.powerSystem.PoweredItem;
-import reborncore.common.powerSystem.TileEnergyBase;
+import reborncore.common.powerSystem.TileEnergyUpgradeable;
 import reborncore.common.util.inventory.Inventory;
 import techreborn.blocks.storage.BlockEnergyStorage;
 
@@ -18,22 +18,18 @@ import java.util.List;
 /**
  * Created by Rushmead
  */
-public abstract class TileEnergyStorage extends TileEnergyBase implements IWrenchable {
+public abstract class TileEnergyStorage extends TileEnergyUpgradeable implements IWrenchable {
 
 	public String name;
 	public Block wrenchDrop;
-	public int maxInput;
-	public int maxOutput;
 
 	private Inventory inventoryCharging;
 
-	public TileEnergyStorage(String name, Block wrenchDrop, EnumPowerTier tier, int maxInput, int maxOuput, int maxStorage)
+	public TileEnergyStorage(String name, Block wrenchDrop, EnumPowerTier tier, int maxStorage)
 	{
 		super(tier, maxStorage);
 		this.wrenchDrop = wrenchDrop;
 		this.name = name;
-		this.maxInput = maxInput;
-		this.maxOutput = maxOuput;
 
 		this.inventoryCharging = new Inventory("Charging", 2, 1, this);
 	}
@@ -84,13 +80,13 @@ public abstract class TileEnergyStorage extends TileEnergyBase implements IWrenc
 	public void updateEntity() {
         super.updateEntity();
 
-		if (getInventoryUpgrades().getStackInSlot(0) != null)
+		if (this.inventoryCharging.getStackInSlot(0) != null)
 		{
-			ItemStack stack = getInventoryUpgrades().getStackInSlot(0);
+			ItemStack stack = this.inventoryCharging.getStackInSlot(0);
 			if(!(stack.getItem() instanceof IEnergyItemInfo)){
 				return;
 			}
-			IEnergyItemInfo item = (IEnergyItemInfo) getInventoryUpgrades().getStackInSlot(0).getItem();
+			IEnergyItemInfo item = (IEnergyItemInfo) this.inventoryCharging.getStackInSlot(0).getItem();
 			if (PoweredItem.getEnergy(stack) != PoweredItem.getMaxPower(stack))
 			{
 				if (canUseEnergy(item.getMaxTransfer(stack)))
@@ -100,9 +96,9 @@ public abstract class TileEnergyStorage extends TileEnergyBase implements IWrenc
 				}
 			}
 		}
-		if (getInventoryUpgrades().getStackInSlot(1) != null)
+		if (this.inventoryCharging.getStackInSlot(1) != null)
 		{
-			ItemStack stack = getInventoryUpgrades().getStackInSlot(1);
+			ItemStack stack = this.inventoryCharging.getStackInSlot(1);
 			if(!(stack.getItem() instanceof IEnergyItemInfo)){
 				return;
 			}
@@ -120,12 +116,21 @@ public abstract class TileEnergyStorage extends TileEnergyBase implements IWrenc
 
 	@Override
 	public void setFacing(EnumFacing enumFacing) {
-		worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(BlockEnergyStorage.FACING, enumFacing));
+		getWorld().setBlockState(getPos(), getWorld().getBlockState(getPos()).withProperty(BlockEnergyStorage.FACING, enumFacing));
 	}
 
 	@Override
 	public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
-		return new ItemStack(wrenchDrop);
+		return new ItemStack(this.wrenchDrop);
+	}
+
+	@Override
+	public EnumFacing getFacingEnum() {
+		Block block = getWorld().getBlockState(getPos()).getBlock();
+		if (block instanceof BlockEnergyStorage) {
+			return ((BlockEnergyStorage) block).getFacing(getWorld().getBlockState(getPos()));
+		}
+		return null;
 	}
 
 	@Override
@@ -134,36 +139,12 @@ public abstract class TileEnergyStorage extends TileEnergyBase implements IWrenc
 	}
 
 	@Override
-	public EnumFacing getFacingEnum() {
-		Block block = worldObj.getBlockState(pos).getBlock();
-		if (block instanceof BlockEnergyStorage) {
-			return ((BlockEnergyStorage) block).getFacing(worldObj.getBlockState(pos));
-		}
-		return null;
-	}
-
-	@Override
 	public boolean canProvideEnergy(EnumFacing direction) {
 		return getFacing() == direction;
-	}
-
-	@Override
-	public double getMaxOutput() {
-		return maxOutput;
-	}
-
-	public void setMaxOutput(int maxOutput) {
-		this.maxOutput = maxOutput;
-	}
-
-	@Override
-	public double getMaxInput() {
-		return maxInput;
 	}
 
 	@Override
 	public void addInfo(List<String> info, boolean isRealTile) {
 		info.add(this.name);
 	}
-
 }

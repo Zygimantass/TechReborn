@@ -1,82 +1,47 @@
 package techreborn.tiles.energy.generator;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.ItemStack;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.powerSystem.TilePowerAcceptor;
+import techreborn.init.ModBlocks;
 
 /**
  * Created by modmuss50 on 25/02/2016.
  */
-public class TileWaterMill extends TilePowerAcceptor
-{
+public class TileWaterMill extends AbstractTileGenerator {
 
-	int waterblocks = 0;
+    private int waterBlocks;
 
-	public TileWaterMill()
-	{
-		super(1);
+	public TileWaterMill() {
+		super(EnumPowerTier.LOW, 4);
 	}
 
-	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		if (worldObj.getTotalWorldTime() % 20 == 0)
-		{
-			checkForWater();
-		}
-		if (waterblocks > 0)
-		{
-			addEnergy(waterblocks);
-		}
-	}
+    @Override
+    public void updateRequirements() {
+        updateWaterCount();
+    }
 
-	public void checkForWater()
-	{
-		waterblocks = 0;
-		for (EnumFacing facing : EnumFacing.HORIZONTALS)
-		{
-			if (worldObj.getBlockState(getPos().offset(facing)).getBlock() == Blocks.WATER)
-			{
-				waterblocks++;
-			}
-		}
-	}
+    private void updateWaterCount() {
+        this.waterBlocks = 0;
 
-	@Override
-	public double getMaxPower()
-	{
-		return 1000;
-	}
+        for(int x = this.getPos().getX() - 1; x < this.getPos().getZ() + 2; x++) {
+            for(int y = this.getPos().getY() - 1; y < this.getPos().getY() + 2; y++) {
+                for(int z = this.getPos().getZ() - 1; z < this.getPos().getZ() + 2; z++) {
+                    Block block = this.getWorld().getBlockState(getPos()).getBlock();
+                    if(block == Blocks.WATER || block == Blocks.FLOWING_WATER) {
+                        this.waterBlocks++;
+                    }
+                }
+            }
+        }
 
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return false;
-	}
+        setEuPerTick(this.waterBlocks);
+    }
 
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return true;
-	}
-
-	@Override
-	public double getMaxOutput()
-	{
-		return 32;
-	}
-
-	@Override
-	public double getMaxInput()
-	{
-		return 0;
-	}
-
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
-	}
+    @Override
+    public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
+        return new ItemStack(ModBlocks.waterMill, 1);
+    }
 }

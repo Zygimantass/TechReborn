@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import reborncore.common.powerSystem.PowerSystem;
-import techreborn.client.container.energy.storage.ContainerBatbox;
+import techreborn.client.container.energy.storage.ContainerBatBox;
 import techreborn.tiles.energy.storage.TileBatBox;
 
 public class GuiBatbox extends GuiContainer
@@ -15,15 +15,15 @@ public class GuiBatbox extends GuiContainer
 
 	TileBatBox generator;
 
-	ContainerBatbox containerGenerator;
+	ContainerBatBox containerGenerator;
 
 	public GuiBatbox(EntityPlayer player, TileBatBox generator)
 	{
-		super(new ContainerBatbox(generator, player));
+		super(new ContainerBatBox(generator, player));
 		this.xSize = 176;
 		this.ySize = 167;
 		this.generator = generator;
-		this.containerGenerator = (ContainerBatbox) this.inventorySlots;
+		this.containerGenerator = (ContainerBatBox) this.inventorySlots;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class GuiBatbox extends GuiContainer
 				this.ySize - 96 + 2, 4210752);
 		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(generator.getMaxPower()), 25, this.ySize - 140,
 				4210752);
-		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(containerGenerator.energy), 25, this.ySize - 150,
+		this.fontRendererObj.drawString(PowerSystem.getLocaliszedPower(generator.getEnergy()), 25, this.ySize - 150,
 				4210752);
 	}
 }

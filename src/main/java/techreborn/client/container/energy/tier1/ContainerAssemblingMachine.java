@@ -1,7 +1,7 @@
 package techreborn.client.container.energy.tier1;
 
 import net.minecraft.entity.player.EntityPlayer;
-import reborncore.client.gui.slots.SlotDischargeItem;
+import reborncore.client.gui.slots.SlotCharge;
 import reborncore.client.gui.slots.SlotInput;
 import reborncore.client.gui.slots.SlotOutput;
 import techreborn.client.container.base.ContainerCrafting;
@@ -20,6 +20,7 @@ public class ContainerAssemblingMachine extends ContainerCrafting {
 		addSlotToContainer(new SlotOutput(tileEntity.getInventory(), getNextSlotIndex(), 116, 35));
 
 		// power
-		addSlotToContainer(new SlotDischargeItem(tileEntity.getInventory(), getNextSlotIndex(), 56, 53));
+		//addSlotToContainer(new SlotDischargeItem(tileEntity.getInventory(), getNextSlotIndex(), 56, 53));
+		addSlotToContainer(new SlotCharge(tileEntity.getInventory(), getNextSlotIndex(), 56, 53));
 	}
 }

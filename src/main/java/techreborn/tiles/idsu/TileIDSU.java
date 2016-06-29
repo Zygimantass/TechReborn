@@ -18,14 +18,14 @@ public class TileIDSU extends TileEnergyStorage implements IWrenchable
 	private double euChange;
 	private int ticks;
 
-	public TileIDSU(EnumPowerTier tier, int output, int maxStorage)
+	public TileIDSU(EnumPowerTier tier, int maxStorage)
 	{
-		super("IDSU", null, tier, maxStorage, output, 1000000000);
+		super("IDSU", ModBlocks.Idsu, tier, maxStorage);
 	}
 
 	public TileIDSU()
 	{
-		this(EnumPowerTier.EXTREME, 2048, 100000000);
+		this(EnumPowerTier.EXTREME, 100000000);
 	}
 
 	@Override
@@ -125,21 +125,21 @@ public class TileIDSU extends TileEnergyStorage implements IWrenchable
 		return (euChange / ticks);
 	}
 
-	public void handleGuiInputFromClient(int id)
-	{
-		if (id == 0) {
-			setMaxOutput(getMaxOutput() + 256);
-		}
-		if (id == 1) {
-            setMaxOutput(getMaxOutput() + 64);
-		}
-		if (id == 2) {
-            setMaxOutput(getMaxOutput() - 64);
-		}
-		if (id == 3) {
-            setMaxOutput(getMaxOutput() - 256);
-		}
-
-        setMaxOutput(Math.max(0, Math.min(getMaxOutput(), 4096)));
-	}
+//	public void handleGuiInputFromClient(int id)
+//	{
+//		if (id == 0) {
+//			setMaxOutput(getMaxOutput() + 256);
+//		}
+//		if (id == 1) {
+//            setMaxOutput(getMaxOutput() + 64);
+//		}
+//		if (id == 2) {
+//            setMaxOutput(getMaxOutput() - 64);
+//		}
+//		if (id == 3) {
+//            setMaxOutput(getMaxOutput() - 256);
+//		}
+//
+//        setMaxOutput(Math.max(0, Math.min(getMaxOutput(), 4096)));
+//	}
 }

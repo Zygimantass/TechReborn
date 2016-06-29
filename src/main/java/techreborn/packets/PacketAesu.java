@@ -1,22 +1,22 @@
 package techreborn.packets;
 
-import java.io.IOException;
-
-import reborncore.common.packets.SimplePacket;
-import techreborn.tiles.TileAesu;
 import io.netty.buffer.ByteBuf;
+import reborncore.common.packets.SimplePacket;
+import techreborn.tiles.energy.storage.TileAESU;
+
+import java.io.IOException;
 
 public class PacketAesu extends SimplePacket
 {
 
 	int buttonID;
-	TileAesu aesu;
+	TileAESU aesu;
 
 	public PacketAesu()
 	{
 	}
 
-	public PacketAesu(int buttonID, TileAesu aesu)
+	public PacketAesu(int buttonID, TileAESU aesu)
 	{
 		this.aesu = aesu;
 		this.buttonID = buttonID;
@@ -32,7 +32,7 @@ public class PacketAesu extends SimplePacket
 	@Override
 	public void readData(ByteBuf in) throws IOException
 	{
-		this.aesu = (TileAesu) SimplePacket.readTileEntity(in);
+		this.aesu = (TileAESU) SimplePacket.readTileEntity(in);
 		buttonID = in.readInt();
 	}
 

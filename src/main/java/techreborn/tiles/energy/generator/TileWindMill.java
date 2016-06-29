@@ -1,72 +1,56 @@
 package techreborn.tiles.energy.generator;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import reborncore.api.power.EnumPowerTier;
-import reborncore.common.powerSystem.TilePowerAcceptor;
+import techreborn.init.ModBlocks;
 
 /**
  * Created by modmuss50 on 25/02/2016.
  */
-public class TileWindMill extends TilePowerAcceptor
-{
+public class TileWindMill extends AbstractTileGenerator {
 
-	int basePower = 16;
+    private int obstructedBlockCount;
 
-	public TileWindMill()
-	{
-		super(2);
+	public TileWindMill() {
+		super(EnumPowerTier.LOW, 5);
 	}
 
-	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
-		if (pos.getY() > 64)
-		{
-			int actualPower = basePower;
-			if (worldObj.isThundering())
-			{
-				actualPower *= 1.25;
-			}
-			addEnergy(actualPower); // Value taken from
-									// http://wiki.industrial-craft.net/?title=Wind_Mill
-									// Not worth making more complicated
-		}
-	}
+    @Override
+    public void updateRequirements() {
+        updateObscuratedBlockCount();
+    }
 
-	@Override
-	public double getMaxPower()
-	{
-		return 10000;
-	}
+    private void updateObscuratedBlockCount() {
+        this.obstructedBlockCount = -1;
 
-	@Override
-	public boolean canAcceptEnergy(EnumFacing direction)
-	{
-		return false;
-	}
+        for(int x = -4; x < 5; x++) {
+            for(int y = -2; y < 5; y++) {
+                for(int z = -4; z < 5; z++) {
+                    if(!this.getWorld().isAirBlock(this.getPos().add(x, y, z))) {
+                        this.obstructedBlockCount++;
+                    }
+                }
+            }
+        }
 
-	@Override
-	public boolean canProvideEnergy(EnumFacing direction)
-	{
-		return true;
-	}
+        setEuPerTick(0.0D);
+        if(getPos().getY() > 64) {
+            double actualPower = Math.max(0, (getPos().getY() - 64 - this.obstructedBlockCount) / 750);
 
-	@Override
-	public double getMaxOutput()
-	{
-		return 128;
-	}
+            if(getWorld().isThundering()) {
+                actualPower *= 1.5D;
+            }
+            else if(getWorld().isRaining()) {
+                actualPower *= 1.2D;
+            }
 
-	@Override
-	public double getMaxInput()
-	{
-		return 0;
-	}
+            setEuPerTick(actualPower);
+        }
+    }
 
-	@Override
-	public EnumPowerTier getTier()
-	{
-		return EnumPowerTier.LOW;
-	}
+    @Override
+    public ItemStack getWrenchDrop(EntityPlayer entityPlayer) {
+        return new ItemStack(ModBlocks.windMill, 1);
+    }
 }
