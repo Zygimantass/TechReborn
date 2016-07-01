@@ -20,7 +20,7 @@ public class BlockMFE extends BlockEnergyStorage
 {
 	public BlockMFE()
 	{
-		super("MFE", GuiHandler.mfeID, "mv");
+		super("MFE", GuiHandler.mfeID);
 	}
 
 	@Override

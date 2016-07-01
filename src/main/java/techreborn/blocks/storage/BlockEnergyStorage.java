@@ -39,12 +39,11 @@ import java.util.Random;
 public abstract class BlockEnergyStorage extends BaseTileBlock implements IRotationTexture, ITexturedBlock
 {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", Facings.ALL);
-	protected final String prefix = "techreborn:blocks/machines/energy/";
+	protected final String prefix = "techreborn:blocks/machine/storage/";
 	public String name;
-	public String texutureName;
 	public int guiID;
 
-	public BlockEnergyStorage(String name, int guiID, String textureName)
+	public BlockEnergyStorage(String name, int guiID)
 	{
 		super(Material.ROCK);
 		setHardness(2f);
@@ -52,10 +51,6 @@ public abstract class BlockEnergyStorage extends BaseTileBlock implements IRotat
 		setCreativeTab(TechRebornCreativeTab.instance);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.name = name;
-		this.texutureName = textureName;
-		if(!this.texutureName.contains("_storage")){
-			this.texutureName = this.texutureName + "_storage";
-		}
 		this.guiID = guiID;
 	}
 
@@ -161,31 +156,31 @@ public abstract class BlockEnergyStorage extends BaseTileBlock implements IRotat
 	@Override
 	public String getFrontOff()
 	{
-		return prefix  + texutureName.toLowerCase() +  "_front";
+		return prefix  + name.toLowerCase() +  "_front";
 	}
 
 	@Override
 	public String getFrontOn()
 	{
-		return prefix  + texutureName.toLowerCase() +  "_front";
+		return prefix  + name.toLowerCase() +  "_front";
 	}
 
 	@Override
 	public String getSide()
 	{
-		return prefix  + texutureName.toLowerCase() +  "_side";
+		return prefix  + name.toLowerCase() +  "_side";
 	}
 
 	@Override
 	public String getTop()
 	{
-		return prefix + texutureName.toLowerCase() +  "_side";
+		return prefix + name.toLowerCase() +  "_top";
 	}
 
 	@Override
 	public String getBottom()
 	{
-		return prefix + texutureName.toLowerCase() + "_side";
+		return prefix + name.toLowerCase() + "_bottom";
 	}
 
 	@Override

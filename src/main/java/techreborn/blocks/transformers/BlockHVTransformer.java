@@ -23,7 +23,7 @@ public class BlockHVTransformer extends BlockTransformer
 
 	public BlockHVTransformer()
 	{
-		super("hvtransformer", "hv");
+		super("hvtransformer");
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class BlockMFSU extends BlockEnergyStorage
 {
 	public BlockMFSU()
 	{
-		super("MFSU", GuiHandler.mfsuID, "hv");
+		super("MFSU", GuiHandler.mfsuID);
 		setHardness(2f);
 	}
 

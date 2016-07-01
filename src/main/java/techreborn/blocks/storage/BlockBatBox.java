@@ -19,7 +19,7 @@ public class BlockBatBox extends BlockEnergyStorage
 {
 	public BlockBatBox()
 	{
-		super("Batbox", GuiHandler.batboxID, "lv");
+		super("Batbox", GuiHandler.batboxID);
 	}
 
 	@Override

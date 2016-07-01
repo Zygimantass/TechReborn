@@ -35,11 +35,10 @@ import java.util.Random;
 public abstract class BlockTransformer extends BaseTileBlock implements IRotationTexture, ITexturedBlock
 {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", Facings.ALL);
-	protected final String prefix = "techreborn:blocks/machines/energy/";
+	protected final String prefix = "techreborn:blocks/machine/storage/";
 	public String name;
-	public String textureName;
 
-	public BlockTransformer(String name, String textureName)
+	public BlockTransformer(String name)
 	{
 		super(Material.ROCK);
 		setHardness(2f);
@@ -47,7 +46,6 @@ public abstract class BlockTransformer extends BaseTileBlock implements IRotatio
 		setCreativeTab(TechRebornCreativeTab.instance);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.name = name;
-		this.textureName = textureName + "_transformer";
 	}
 	protected BlockStateContainer createBlockState()
 	{
@@ -232,31 +230,31 @@ public abstract class BlockTransformer extends BaseTileBlock implements IRotatio
 	@Override
 	public String getFrontOff()
 	{
-		return prefix  + textureName.toLowerCase() +  "_front";
+		return prefix  + name.toLowerCase() +  "_front";
 	}
 
 	@Override
 	public String getFrontOn()
 	{
-		return prefix  + textureName.toLowerCase() +  "_front";
+		return prefix  + name.toLowerCase() +  "_front";
 	}
 
 	@Override
 	public String getSide()
 	{
-		return prefix  + textureName.toLowerCase() +  "_side";
+		return prefix  + name.toLowerCase() +  "_side";
 	}
 
 	@Override
 	public String getTop()
 	{
-		return prefix + textureName.toLowerCase() +  "_side";
+		return prefix + name.toLowerCase() +  "_side";
 	}
 
 	@Override
 	public String getBottom()
 	{
-		return prefix + textureName.toLowerCase() + "_side";
+		return prefix + name.toLowerCase() + "_side";
 	}
 
 	@Override
